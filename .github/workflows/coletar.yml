@@ -1,0 +1,49 @@
+name: Coletar noticias
+
+# Coleta automatica dos feeds RSS, traduz EN->PT e commita as notas.
+# A Vercel publica sozinha a cada push no branch principal.
+
+on:
+  schedule:
+    - cron: "0 */6 * * *" # a cada 6 horas (UTC)
+  workflow_dispatch: {} # permite rodar manualmente pela aba Actions
+
+permissions:
+  contents: write
+
+concurrency:
+  group: coletar
+  cancel-in-progress: false
+
+jobs:
+  coletar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Coletar
+        env:
+          RETENCAO_DIAS: ${{ vars.RETENCAO_DIAS || '30' }}
+        run: npm run coletar
+
+      - name: Commitar mudancas
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/content/noticias
+          if git diff --staged --quiet; then
+            echo "Sem novidades nesta rodada."
+          else
+            git commit -m "chore: atualiza noticias ($(date -u +'%Y-%m-%d %H:%M UTC'))"
+            git push
+          fi
