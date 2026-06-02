@@ -1,0 +1,46 @@
+---
+import Base from "../../layouts/Base.astro";
+import CardNoticia from "../../components/CardNoticia.astro";
+import { CATEGORIAS } from "../../content/config";
+import { noticiasPorCategoria } from "../../lib/conteudo";
+import { slugCategoria, corCategoria } from "../../lib/site";
+
+export async function getStaticPaths() {
+  return CATEGORIAS.map((cat) => ({
+    params: { categoria: slugCategoria(cat) },
+    props: { cat },
+  }));
+}
+
+const { cat } = Astro.props;
+const noticias = await noticiasPorCategoria(cat);
+const cor = corCategoria(cat);
+const lead = noticias[0];
+const resto = noticias.slice(1);
+---
+
+<Base titulo={cat} ativo={cat} descricao={`Ultimas noticias de ${cat} no GPlay Newsletter.`}>
+  <div class="section-title" style={`color:${cor}`}>{cat}</div>
+
+  {
+    noticias.length === 0 ? (
+      <p class="aviso" style="margin-top:10px">Nenhuma noticia de {cat} ainda. Rode <code>npm run coletar</code>.</p>
+    ) : (
+      <>
+        {lead && (
+          <div class="grid grid--lead" style="margin-bottom:8px">
+            <CardNoticia entry={lead} destaque />
+            <div class="grid" style="gap:16px">
+              {resto.slice(0, 4).map((n) => <CardNoticia entry={n} />)}
+            </div>
+          </div>
+        )}
+        {resto.length > 4 && (
+          <div class="grid grid--3" style="margin-top:24px">
+            {resto.slice(4).map((n) => <CardNoticia entry={n} />)}
+          </div>
+        )}
+      </>
+    )
+  }
+</Base>

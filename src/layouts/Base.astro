@@ -1,0 +1,142 @@
+---
+import "../styles/global.css";
+import { NOME_SITE, dataLonga } from "../lib/site";
+import { CATEGORIAS } from "../content/config";
+import { slugCategoria } from "../lib/site";
+
+interface Props {
+  titulo?: string;
+  descricao?: string;
+  ativo?: string;
+}
+
+const { titulo, descricao = "Jornal de noticias sobre Jogos, Futebol, Tecnologia, IA e Filmes.", ativo } = Astro.props;
+const tituloPagina = titulo ? `${titulo} — ${NOME_SITE}` : NOME_SITE;
+const edicao = dataLonga(new Date());
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{tituloPagina}</title>
+    <meta name="description" content={descricao} />
+    <meta property="og:title" content={tituloPagina} />
+    <meta property="og:description" content={descricao} />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%97%9E%EF%B8%8F%3C/text%3E%3C/svg%3E" />
+    <script is:inline>
+      (function () {
+        try {
+          var t = localStorage.getItem("gplay-tema");
+          if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "escuro" : "claro";
+          document.documentElement.setAttribute("data-tema", t);
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <header class="masthead">
+      <div class="container">
+        <div class="masthead__top">
+          <span>{edicao}</span>
+          <span>Edicao Digital</span>
+        </div>
+        <h1 class="masthead__title"><a href="/">{NOME_SITE}</a></h1>
+        <div class="masthead__sub">Jogos · Futebol · Tecnologia · IA · Filmes</div>
+      </div>
+    </header>
+
+    <nav class="nav">
+      <div class="container nav__inner">
+        <a href="/" aria-current={ativo === "capa" ? "page" : undefined}>Capa</a>
+        {
+          CATEGORIAS.map((c) => (
+            <a href={`/categoria/${slugCategoria(c)}`} aria-current={ativo === c ? "page" : undefined}>
+              {c}
+            </a>
+          ))
+        }
+        <a href="/eventos" aria-current={ativo === "eventos" ? "page" : undefined}>Eventos</a>
+        <span class="nav__spacer"></span>
+        <button id="btn-tema" class="btn-icon" type="button" aria-label="Alternar tema" title="Alternar tema claro/escuro">🌓</button>
+      </div>
+    </nav>
+
+    <main class="container">
+      <slot />
+    </main>
+
+    <footer class="rodape">
+      <div class="container">
+        <p>
+          <strong>{NOME_SITE}</strong> — agregador de noticias. Todos os titulos, resumos e imagens
+          pertencem aos seus respectivos veiculos; cada materia leva ao site de origem.
+        </p>
+        <p>Conteudo coletado automaticamente via RSS.</p>
+      </div>
+    </footer>
+
+    <script is:inline>
+      (function () {
+        var btn = document.getElementById("btn-tema");
+        if (btn) {
+          btn.addEventListener("click", function () {
+            var atual = document.documentElement.getAttribute("data-tema");
+            var novo = atual === "escuro" ? "claro" : "escuro";
+            document.documentElement.setAttribute("data-tema", novo);
+            try {
+              localStorage.setItem("gplay-tema", novo);
+            } catch (e) {}
+          });
+        }
+        // contagem regressiva dos eventos
+        function plural(n, s, p) {
+          return n + " " + (n === 1 ? s : p);
+        }
+        function tick() {
+          var agora = Date.now();
+          document.querySelectorAll(".countdown").forEach(function (el) {
+            var ini = new Date(el.getAttribute("data-inicio")).getTime();
+            var fim = new Date(el.getAttribute("data-fim")).getTime();
+            var num = el.querySelector(".countdown__num");
+            var lab = el.querySelector(".countdown__label");
+            if (!num || !lab) return;
+            if (agora >= ini && agora <= fim) {
+              el.classList.add("countdown--ao-vivo");
+              num.textContent = "● AO VIVO";
+              lab.textContent = "acontecendo agora";
+              return;
+            }
+            if (agora > fim) {
+              el.classList.remove("countdown--ao-vivo");
+              num.textContent = "encerrado";
+              lab.textContent = "";
+              return;
+            }
+            var s = Math.floor((ini - agora) / 1000);
+            var d = Math.floor(s / 86400);
+            var h = Math.floor((s % 86400) / 3600);
+            var m = Math.floor((s % 3600) / 60);
+            var seg = s % 60;
+            if (d > 0) {
+              num.textContent = plural(d, "dia", "dias");
+              lab.textContent = h + "h " + m + "min";
+            } else if (h > 0) {
+              num.textContent = h + "h " + m + "min";
+              lab.textContent = seg + "s";
+            } else {
+              num.textContent = m + "min " + seg + "s";
+              lab.textContent = "falta pouco!";
+            }
+          });
+        }
+        if (document.querySelector(".countdown")) {
+          tick();
+          setInterval(tick, 1000);
+        }
+      })();
+    </script>
+  </body>
+</html>

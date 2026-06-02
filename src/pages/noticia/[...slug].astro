@@ -1,0 +1,60 @@
+---
+import Base from "../../layouts/Base.astro";
+import CardNoticia from "../../components/CardNoticia.astro";
+import { noticiasOrdenadas } from "../../lib/conteudo";
+import { corCategoria, slugCategoria, dataLonga, horaCurta } from "../../lib/site";
+
+export async function getStaticPaths() {
+  const noticias = await noticiasOrdenadas();
+  return noticias.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry, todas: noticias },
+  }));
+}
+
+const { entry, todas } = Astro.props;
+const d = entry.data;
+const cor = corCategoria(d.categoria);
+
+const relacionadas = todas
+  .filter((n) => n.data.categoria === d.categoria && n.slug !== entry.slug)
+  .slice(0, 3);
+---
+
+<Base titulo={d.titulo} ativo={d.categoria} descricao={d.resumo || d.titulo}>
+  <article class="artigo">
+    <a href={`/categoria/${slugCategoria(d.categoria)}`}>
+      <span class="chip" style={`background:${cor}`}>{d.categoria}</span>
+    </a>
+
+    <h1>{d.titulo}</h1>
+
+    <div class="card__meta" style="font-size:13px">
+      <span>{d.fonte}</span>
+      {d.autor && <><span>·</span><span>{d.autor}</span></>}
+      <span>·</span>
+      <span>{dataLonga(d.publicado)}, {horaCurta(d.publicado)}</span>
+    </div>
+
+    {d.imagem && <img class="artigo__hero" src={d.imagem} alt={d.titulo} loading="lazy" referrerpolicy="no-referrer" />}
+
+    <div class="artigo__corpo">
+      <p>{d.resumo || "Resumo nao disponivel para esta materia."}</p>
+    </div>
+
+    <a class="artigo__fonte" href={d.link} target="_blank" rel="noopener">
+      Ler materia completa em {d.fonte} →
+    </a>
+  </article>
+
+  {
+    relacionadas.length > 0 && (
+      <>
+        <div class="section-title">Mais em {d.categoria}</div>
+        <div class="grid grid--3">
+          {relacionadas.map((n) => <CardNoticia entry={n} />)}
+        </div>
+      </>
+    )
+  }
+</Base>

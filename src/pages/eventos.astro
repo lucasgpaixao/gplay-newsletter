@@ -1,0 +1,46 @@
+---
+import Base from "../layouts/Base.astro";
+import EventoCard from "../components/EventoCard.astro";
+import CardNoticia from "../components/CardNoticia.astro";
+import { eventosOrdenados, noticiasOrdenadas, noticiasDoEvento, proximosEventos } from "../lib/conteudo";
+
+const noticias = await noticiasOrdenadas();
+const proximos = await proximosEventos();
+const todos = await eventosOrdenados();
+const agora = Date.now();
+const passados = todos.filter((e) => {
+  const fim = e.data.fim ?? new Date(e.data.inicio.getTime() + 2 * 60 * 60 * 1000);
+  return fim.getTime() < agora;
+});
+---
+
+<Base titulo="Eventos" ativo="eventos" descricao="Cobertura especial: State of Play, Summer Game Fest, Copa do Mundo e mais.">
+  <div class="section-title">Cobertura Especial — Eventos</div>
+
+  <div class="grid" style="gap:16px">
+    {proximos.map((e) => {
+      const rel = noticiasDoEvento(e, noticias).slice(0, 3);
+      return (
+        <div>
+          <EventoCard entry={e} />
+          {rel.length > 0 && (
+            <div class="grid grid--3" style="margin-top:14px">
+              {rel.map((n) => <CardNoticia entry={n} />)}
+            </div>
+          )}
+        </div>
+      );
+    })}
+  </div>
+
+  {
+    passados.length > 0 && (
+      <>
+        <div class="section-title">Eventos encerrados</div>
+        <div class="grid" style="gap:14px">
+          {passados.map((e) => <EventoCard entry={e} />)}
+        </div>
+      </>
+    )
+  }
+</Base>

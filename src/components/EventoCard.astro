@@ -1,0 +1,41 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { corCategoria } from "../lib/site";
+
+interface Props {
+  entry: CollectionEntry<"eventos">;
+}
+
+const { entry } = Astro.props;
+const e = entry.data;
+const cor = corCategoria(e.categoria);
+const inicio = e.inicio;
+const fim = e.fim ?? new Date(inicio.getTime() + 2 * 60 * 60 * 1000);
+const dia = new Intl.DateTimeFormat("pt-BR", { day: "2-digit", timeZone: "America/Sao_Paulo" }).format(inicio);
+const mes = new Intl.DateTimeFormat("pt-BR", { month: "short", timeZone: "America/Sao_Paulo" })
+  .format(inicio)
+  .replace(".", "")
+  .toUpperCase();
+const hora = new Intl.DateTimeFormat("pt-BR", { hour: "2-digit", minute: "2-digit", timeZone: "America/Sao_Paulo" }).format(inicio);
+---
+
+<article class="evento" style={`--cat:${cor}`}>
+  <div class="evento__data">
+    <div class="evento__dia">{dia}</div>
+    <div class="evento__mes">{mes}</div>
+  </div>
+  <div>
+    <h3 class="evento__nome">
+      {e.nome}
+      {!e.confirmado && <span class="chip chip--ghost" style="margin-left:8px">a confirmar</span>}
+    </h3>
+    <p class="evento__desc">{e.descricao}</p>
+    <p class="evento__desc" style="margin-top:4px;font-size:12.5px">
+      {hora} (horario de Brasilia){e.link && <> · <a href={e.link} target="_blank" rel="noopener">site oficial</a></>}
+    </p>
+  </div>
+  <div class="countdown" data-inicio={inicio.toISOString()} data-fim={fim.toISOString()}>
+    <div class="countdown__num">--</div>
+    <div class="countdown__label">carregando</div>
+  </div>
+</article>

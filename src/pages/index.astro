@@ -1,0 +1,84 @@
+---
+import Base from "../layouts/Base.astro";
+import CardNoticia from "../components/CardNoticia.astro";
+import EventoCard from "../components/EventoCard.astro";
+import { CATEGORIAS } from "../content/config";
+import { noticiasOrdenadas, proximosEventos } from "../lib/conteudo";
+import { slugCategoria } from "../lib/site";
+
+const noticias = await noticiasOrdenadas();
+const eventos = (await proximosEventos()).slice(0, 3);
+
+const lead = noticias[0];
+const secundarias = noticias.slice(1, 5);
+const recentes = noticias.slice(5, 17);
+
+const porCategoria = CATEGORIAS.map((c) => ({
+  cat: c,
+  itens: noticias.filter((n) => n.data.categoria === c).slice(0, 3),
+})).filter((g) => g.itens.length > 0);
+---
+
+<Base ativo="capa">
+  {
+    noticias.length === 0 && (
+      <p class="aviso" style="margin-top:28px">
+        Ainda nao ha noticias coletadas. Rode <code>npm run coletar</code> para popular o jornal.
+      </p>
+    )
+  }
+
+  {
+    eventos.length > 0 && (
+      <>
+        <div class="section-title">Proximos Eventos</div>
+        <div class="grid" style="gap:14px">
+          {eventos.map((e) => <EventoCard entry={e} />)}
+        </div>
+      </>
+    )
+  }
+
+  {
+    lead && (
+      <>
+        <div class="section-title">Manchetes</div>
+        <div class="grid grid--lead">
+          <CardNoticia entry={lead} destaque />
+          <div class="grid" style="gap:16px">
+            {secundarias.map((n) => <CardNoticia entry={n} />)}
+          </div>
+        </div>
+      </>
+    )
+  }
+
+  {
+    recentes.length > 0 && (
+      <>
+        <div class="section-title">Mais recentes</div>
+        <div class="grid grid--3">
+          {recentes.map((n) => <CardNoticia entry={n} />)}
+        </div>
+      </>
+    )
+  }
+
+  {
+    porCategoria.map((g) => (
+      <>
+        <div class="section-title">
+          {g.cat}
+          <a href={`/categoria/${slugCategoria(g.cat)}`} style="font-size:12px;letter-spacing:0;text-transform:none;font-weight:600">
+            ver tudo →
+          </a>
+        </div>
+        <div class="grid grid--3">
+          {g.itens.map((n) => (
+            <CardNoticia entry={n} />
+          ))}
+        </div>
+      </>
+    ))
+  }
+</Base>

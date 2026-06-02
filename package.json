@@ -1,0 +1,25 @@
+{
+  "name": "gplay-newsletter",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "description": "GPlay Newsletter - jornal de noticias sobre Jogos, Futebol, Tecnologia, IA e Filmes",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "coletar": "tsx scripts/coletar.ts",
+    "coletar:limpar": "tsx scripts/coletar.ts --limpar"
+  },
+  "dependencies": {
+    "astro": "^4.16.18"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "rss-parser": "^3.13.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  }
+}
