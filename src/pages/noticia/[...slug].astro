@@ -1,11 +1,11 @@
 ---
 import Base from "../../layouts/Base.astro";
 import CardNoticia from "../../components/CardNoticia.astro";
-import { noticiasOrdenadas } from "../../lib/conteudo";
+import { noticiasPublicadas } from "../../lib/conteudo";
 import { corCategoria, slugCategoria, dataLonga, horaCurta } from "../../lib/site";
 
 export async function getStaticPaths() {
-  const noticias = await noticiasOrdenadas();
+  const noticias = await noticiasPublicadas();
   return noticias.map((entry) => ({
     params: { slug: entry.slug },
     props: { entry, todas: noticias },

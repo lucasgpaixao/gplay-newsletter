@@ -2,16 +2,17 @@
  * Coletor GPlay Newsletter
  * - Le os feeds RSS de src/config/fontes.ts
  * - Grava uma nota .md por noticia em src/content/noticias/<Categoria>/<AAAA-MM>/
- * - Deduplica por guid/link e aplica retencao (RETENCAO_DIAS)
+ * - Deduplica por guid/link e mantem ate MAX_NOTICIAS_POR_CATEGORIA por categoria
  *
  * Uso: npm run coletar  |  npm run coletar:limpar
  */
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
-import { join, dirname } from "node:path";
+import { join, dirname, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import Parser from "rss-parser";
 
 import { FONTES } from "../src/config/fontes.ts";
+import { MAX_NOTICIAS_POR_CATEGORIA } from "../src/lib/noticias-limites.ts";
 import { slugify, hashCurto } from "../src/lib/slug.ts";
 import { extrairImagem, limparHtml, resumir } from "../src/lib/texto.ts";
 
@@ -26,7 +27,6 @@ try {
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const RAIZ = join(__dirname, "..");
 const DIR_NOTICIAS = join(RAIZ, "src", "content", "noticias");
-const RETENCAO_DIAS = Number(process.env.RETENCAO_DIAS ?? 30);
 const LIMPAR = process.argv.includes("--limpar");
 
 const parser = new Parser({
@@ -84,30 +84,80 @@ function guidsExistentes(): Set<string> {
   return set;
 }
 
-function aplicarRetencao(): number {
-  const limite = Date.now() - RETENCAO_DIAS * 24 * 60 * 60 * 1000;
-  let removidos = 0;
-  for (const arq of listarArquivosMd(DIR_NOTICIAS)) {
-    const m = readFileSync(arq, "utf8").match(/^publicado:\s*(.+)$/m);
-    if (!m) continue;
-    let raw = m[1].trim();
+interface MetaNoticia {
+  arquivo: string;
+  categoria: string;
+  publicado: number;
+}
+
+function metaDeArquivo(arq: string): MetaNoticia | null {
+  const conteudo = readFileSync(arq, "utf8");
+  const mPub = conteudo.match(/^publicado:\s*(.+)$/m);
+  if (!mPub) return null;
+
+  let rawPub = mPub[1].trim();
+  try {
+    rawPub = JSON.parse(rawPub);
+  } catch {
+    /* manter string */
+  }
+  const publicado = new Date(rawPub).getTime();
+  if (Number.isNaN(publicado)) return null;
+
+  const mCat = conteudo.match(/^categoria:\s*(.+)$/m);
+  let categoria: string;
+  if (mCat) {
     try {
-      raw = JSON.parse(raw);
+      categoria = JSON.parse(mCat[1].trim());
     } catch {
-      /* manter */
+      categoria = mCat[1].trim();
     }
-    const dt = new Date(raw).getTime();
-    if (!Number.isNaN(dt) && dt < limite) {
-      rmSync(arq);
+  } else {
+    categoria = relative(DIR_NOTICIAS, arq).split(/[/\\]/)[0] ?? "";
+  }
+  if (!categoria) return null;
+
+  return { arquivo: arq, categoria, publicado };
+}
+
+function limparPastasVazias(dir: string): void {
+  if (!existsSync(dir)) return;
+  for (const entrada of readdirSync(dir, { withFileTypes: true })) {
+    if (entrada.isDirectory()) limparPastasVazias(join(dir, entrada.name));
+  }
+  if (dir !== DIR_NOTICIAS && readdirSync(dir).length === 0) {
+    rmSync(dir, { recursive: true });
+  }
+}
+
+/** Mantem as MAX_NOTICIAS_POR_CATEGORIA mais recentes de cada categoria. */
+function aplicarRetencao(): number {
+  const porCategoria = new Map<string, MetaNoticia[]>();
+
+  for (const arq of listarArquivosMd(DIR_NOTICIAS)) {
+    const meta = metaDeArquivo(arq);
+    if (!meta) continue;
+    const lista = porCategoria.get(meta.categoria) ?? [];
+    lista.push(meta);
+    porCategoria.set(meta.categoria, lista);
+  }
+
+  let removidos = 0;
+  for (const lista of porCategoria.values()) {
+    lista.sort((a, b) => b.publicado - a.publicado);
+    for (const meta of lista.slice(MAX_NOTICIAS_POR_CATEGORIA)) {
+      rmSync(meta.arquivo);
       removidos++;
     }
   }
+
+  limparPastasVazias(DIR_NOTICIAS);
   return removidos;
 }
 
 async function main() {
   console.log(`\n=== GPlay Newsletter :: coleta ===`);
-  console.log(`Retencao: ${RETENCAO_DIAS} dias`);
+  console.log(`Retencao: ${MAX_NOTICIAS_POR_CATEGORIA} noticias por categoria`);
 
   if (LIMPAR && existsSync(DIR_NOTICIAS)) {
     rmSync(DIR_NOTICIAS, { recursive: true, force: true });
@@ -116,7 +166,6 @@ async function main() {
   mkdirSync(DIR_NOTICIAS, { recursive: true });
 
   const jaExistem = guidsExistentes();
-  const limiteRetencao = Date.now() - RETENCAO_DIAS * 24 * 60 * 60 * 1000;
   const vistosNestaRodada = new Set<string>();
   let novos = 0;
 
@@ -140,7 +189,6 @@ async function main() {
       vistosNestaRodada.add(guid);
 
       const publicado = item.isoDate ? new Date(item.isoDate) : new Date();
-      if (publicado.getTime() < limiteRetencao) continue;
 
       const titulo = limparHtml(item.title || "(sem titulo)");
       const resumo = resumir(item.contentSnippet || item.content || item.summary || "");

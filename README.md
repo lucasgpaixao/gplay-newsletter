@@ -8,14 +8,14 @@ Site estático feito com **Astro + TypeScript**. As notícias vivem como arquivo
 
 1. `npm run coletar` lê os feeds em `src/config/fontes.ts`.
 2. Cada notícia vira um `.md` em `src/content/noticias/<Categoria>/<AAAA-MM>/`.
-3. Deduplica por `guid`/link e descarta notícias com mais de `RETENCAO_DIAS` dias (padrão 30).
+3. Deduplica por `guid`/link e mantém até **20 notícias por categoria** (as mais recentes), alinhado ao site.
 4. O Astro gera o site (capa, categorias, artigo, eventos) a partir desses arquivos.
 
 ## Rodando localmente
 
 ```bash
 npm install
-cp .env.example .env      # opcional: configurar tradução/retenção
+cp .env.example .env      # opcional
 npm run coletar           # popula as notícias
 npm run dev               # http://localhost:4321
 ```
@@ -28,11 +28,9 @@ npm run build             # gera o site estático em dist/
 npm run preview           # pré-visualiza o build
 ```
 
-## Variáveis de ambiente (opcionais)
+## Retenção do acervo
 
-| Variável | Função | Padrão |
-|---|---|---|
-| `RETENCAO_DIAS` | Dias de histórico mantidos | `30` |
+O limite está em `src/lib/noticias-limites.ts` (`MAX_NOTICIAS_POR_CATEGORIA = 20`). O coletor e o build do Astro usam o mesmo valor.
 
 ## Fontes
 

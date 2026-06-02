@@ -3,10 +3,10 @@ import Base from "../layouts/Base.astro";
 import CardNoticia from "../components/CardNoticia.astro";
 import EventoCard from "../components/EventoCard.astro";
 import { CATEGORIAS } from "../content/config";
-import { noticiasOrdenadas, proximosEventos } from "../lib/conteudo";
+import { noticiasPublicadas, proximosEventos } from "../lib/conteudo";
 import { slugCategoria } from "../lib/site";
 
-const noticias = await noticiasOrdenadas();
+const noticias = await noticiasPublicadas();
 const eventos = (await proximosEventos()).slice(0, 3);
 
 const lead = noticias[0];

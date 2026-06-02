@@ -2,9 +2,9 @@
 import Base from "../layouts/Base.astro";
 import EventoCard from "../components/EventoCard.astro";
 import CardNoticia from "../components/CardNoticia.astro";
-import { eventosOrdenados, noticiasOrdenadas, noticiasDoEvento, proximosEventos } from "../lib/conteudo";
+import { eventosOrdenados, noticiasPublicadas, noticiasDoEvento, proximosEventos } from "../lib/conteudo";
 
-const noticias = await noticiasOrdenadas();
+const noticias = await noticiasPublicadas();
 const proximos = await proximosEventos();
 const todos = await eventosOrdenados();
 const agora = Date.now();

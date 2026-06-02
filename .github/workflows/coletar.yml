@@ -40,8 +40,6 @@ jobs:
           done
 
       - name: Coletar
-        env:
-          RETENCAO_DIAS: ${{ vars.RETENCAO_DIAS || '30' }}
         run: npm run coletar
 
       - name: Commitar mudancas
