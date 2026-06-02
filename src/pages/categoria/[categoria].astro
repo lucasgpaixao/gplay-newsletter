@@ -1,8 +1,9 @@
 ---
 import Base from "../../layouts/Base.astro";
 import CardNoticia from "../../components/CardNoticia.astro";
+import CardVideo from "../../components/CardVideo.astro";
 import { CATEGORIAS } from "../../content/config";
-import { noticiasPorCategoria } from "../../lib/conteudo";
+import { noticiasPorCategoria, videosBlocoTematico } from "../../lib/conteudo";
 import { slugCategoria, corCategoria } from "../../lib/site";
 
 export async function getStaticPaths() {
@@ -14,6 +15,7 @@ export async function getStaticPaths() {
 
 const { cat } = Astro.props;
 const noticias = await noticiasPorCategoria(cat);
+const videosTema = await videosBlocoTematico(cat);
 const cor = corCategoria(cat);
 const lead = noticias[0];
 const resto = noticias.slice(1);
@@ -42,6 +44,24 @@ const resto = noticias.slice(1);
             {resto.slice(4).map((n) => <CardNoticia entry={n} />)}
           </div>
         )}
+      </>
+    )
+  }
+
+  {
+    videosTema.length > 0 && (
+      <>
+        <div class="section-title" style="margin-top:32px">
+          Videos
+          <a href="/categoria/youtube" style="font-size:12px;letter-spacing:0;text-transform:none;font-weight:600">
+            ver tudo no YouTube →
+          </a>
+        </div>
+        <div class="grid grid--3">
+          {videosTema.map((v) => (
+            <CardVideo entry={v} />
+          ))}
+        </div>
       </>
     )
   }

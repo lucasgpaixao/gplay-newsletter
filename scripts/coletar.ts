@@ -2,7 +2,9 @@
  * Coletor GPlay Newsletter
  * - Le os feeds RSS de src/config/fontes.ts
  * - Grava uma nota .md por noticia em src/content/noticias/<Categoria>/<AAAA-MM>/
+ * - Grava videos em src/content/videos/<CategoriaRelacionada>/<AAAA-MM>/
  * - Deduplica por guid/link e mantem ate MAX_NOTICIAS_POR_CATEGORIA por categoria
+ * - Retem ate MAX_VIDEOS_POR_CATEGORIA_RELACIONADA videos por tema
  *
  * Uso: npm run coletar  |  npm run coletar:limpar
  */
@@ -15,6 +17,8 @@ import { FONTES } from "../src/config/fontes.ts";
 import { MAX_NOTICIAS_POR_CATEGORIA } from "../src/lib/noticias-limites.ts";
 import { slugify, hashCurto } from "../src/lib/slug.ts";
 import { extrairImagem, limparHtml, resumir } from "../src/lib/texto.ts";
+import { MAX_VIDEOS_POR_CATEGORIA_RELACIONADA } from "../src/lib/videos-limites.ts";
+import { coletarVideos } from "./coletar-videos.ts";
 
 // ----- carregar .env (Node 22) -----
 try {
@@ -27,6 +31,7 @@ try {
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const RAIZ = join(__dirname, "..");
 const DIR_NOTICIAS = join(RAIZ, "src", "content", "noticias");
+const DIR_VIDEOS = join(RAIZ, "src", "content", "videos");
 const LIMPAR = process.argv.includes("--limpar");
 
 const parser = new Parser({
@@ -158,10 +163,17 @@ function aplicarRetencao(): number {
 async function main() {
   console.log(`\n=== GPlay Newsletter :: coleta ===`);
   console.log(`Retencao: ${MAX_NOTICIAS_POR_CATEGORIA} noticias por categoria`);
+  console.log(`Retencao videos: ${MAX_VIDEOS_POR_CATEGORIA_RELACIONADA} por categoria relacionada`);
 
-  if (LIMPAR && existsSync(DIR_NOTICIAS)) {
-    rmSync(DIR_NOTICIAS, { recursive: true, force: true });
-    console.log("Acervo de noticias limpo (--limpar).");
+  if (LIMPAR) {
+    if (existsSync(DIR_NOTICIAS)) {
+      rmSync(DIR_NOTICIAS, { recursive: true, force: true });
+      console.log("Acervo de noticias limpo (--limpar).");
+    }
+    if (existsSync(DIR_VIDEOS)) {
+      rmSync(DIR_VIDEOS, { recursive: true, force: true });
+      console.log("Acervo de videos limpo (--limpar).");
+    }
   }
   mkdirSync(DIR_NOTICIAS, { recursive: true });
 
@@ -227,7 +239,14 @@ async function main() {
   }
 
   const removidos = aplicarRetencao();
-  console.log(`\n\n=== Concluido: ${novos} noticias novas, ${removidos} antigas removidas ===\n`);
+
+  console.log(`\n--- Videos YouTube ---`);
+  const { novos: novosVideos, removidos: removidosVideos } = await coletarVideos(DIR_VIDEOS);
+
+  console.log(
+    `\n\n=== Concluido: ${novos} noticias novas, ${removidos} noticias removidas; ` +
+      `${novosVideos} videos novos, ${removidosVideos} videos removidos ===\n`,
+  );
 }
 
 main().catch((err) => {

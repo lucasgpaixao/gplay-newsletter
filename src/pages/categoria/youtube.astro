@@ -1,0 +1,47 @@
+---
+import Base from "../../layouts/Base.astro";
+import CardVideo from "../../components/CardVideo.astro";
+import { videosPublicados } from "../../lib/conteudo";
+import { COR_YOUTUBE, NAV_YOUTUBE } from "../../lib/site";
+
+const videos = await videosPublicados();
+const lead = videos[0];
+const resto = videos.slice(1);
+---
+
+<Base
+  titulo={NAV_YOUTUBE}
+  ativo="YouTube"
+  descricao="Videos do YouTube relacionados a Jogos, Futebol, Tecnologia, IA e Filmes."
+>
+  <div class="section-title" style={`color:${COR_YOUTUBE}`}>{NAV_YOUTUBE}</div>
+  <p class="aviso" style="margin-top:0;margin-bottom:20px;font-size:14px">
+    Uploads recentes dos canais configurados, agrupados por tema. Titulos no idioma original do canal.
+  </p>
+
+  {
+    videos.length === 0 ? (
+      <p class="aviso">
+        Nenhum video coletado ainda. Rode <code>npm run coletar</code>.
+      </p>
+    ) : (
+      <>
+        {lead && (
+          <div class="grid" style="gap:16px;margin-bottom:8px">
+            <CardVideo entry={lead} destaque />
+            {resto.slice(0, 4).length > 0 && (
+              <div class="grid grid--3">
+                {resto.slice(0, 4).map((v) => <CardVideo entry={v} />)}
+              </div>
+            )}
+          </div>
+        )}
+        {resto.length > 4 && (
+          <div class="grid grid--3" style="margin-top:24px">
+            {resto.slice(4).map((v) => <CardVideo entry={v} />)}
+          </div>
+        )}
+      </>
+    )
+  }
+</Base>

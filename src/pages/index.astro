@@ -1,13 +1,17 @@
 ---
 import Base from "../layouts/Base.astro";
 import CardNoticia from "../components/CardNoticia.astro";
+import CardVideo from "../components/CardVideo.astro";
 import EventoCard from "../components/EventoCard.astro";
 import { CATEGORIAS } from "../content/config";
-import { noticiasPublicadas, proximosEventos } from "../lib/conteudo";
-import { slugCategoria } from "../lib/site";
+import { noticiasPublicadas, proximosEventos, videosDestaqueCapa } from "../lib/conteudo";
+import { slugCategoria, COR_YOUTUBE, NAV_YOUTUBE } from "../lib/site";
 
 const noticias = await noticiasPublicadas();
 const eventos = (await proximosEventos()).slice(0, 3);
+const videosCapa = await videosDestaqueCapa();
+const videoLead = videosCapa[0];
+const videosSecundarios = videosCapa.slice(1);
 
 const lead = noticias[0];
 const secundarias = noticias.slice(1, 5);
@@ -48,6 +52,27 @@ const porCategoria = CATEGORIAS.map((c) => ({
           {secundarias.length > 0 && (
             <div class="grid grid--3">
               {secundarias.map((n) => <CardNoticia entry={n} />)}
+            </div>
+          )}
+        </div>
+      </>
+    )
+  }
+
+  {
+    videoLead && (
+      <>
+        <div class="section-title" style={`color:${COR_YOUTUBE}`}>
+          {NAV_YOUTUBE}
+          <a href="/categoria/youtube" style="font-size:12px;letter-spacing:0;text-transform:none;font-weight:600">
+            ver tudo →
+          </a>
+        </div>
+        <div class="grid" style="gap:16px">
+          <CardVideo entry={videoLead} destaque />
+          {videosSecundarios.length > 0 && (
+            <div class="grid grid--3">
+              {videosSecundarios.map((v) => <CardVideo entry={v} />)}
             </div>
           )}
         </div>

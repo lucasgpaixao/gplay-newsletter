@@ -1,15 +1,16 @@
 # GPlay Newsletter
 
-Jornal digital de notícias agregadas sobre **Jogos, Futebol, Tecnologia, IA e Filmes**, em português. Conteúdo coletado automaticamente de feeds RSS. Eventos especiais (State of Play, Summer Game Fest, Copa do Mundo etc.) ganham contagem regressiva e cobertura dedicada.
+Jornal digital de notícias agregadas sobre **Jogos, Futebol, Tecnologia, IA e Filmes**, em português. Conteúdo coletado automaticamente de feeds RSS. A seção **YouTube** traz vídeos recentes de canais ligados a cada tema. Eventos especiais (State of Play, Summer Game Fest, Copa do Mundo etc.) ganham contagem regressiva e cobertura dedicada.
 
 Site estático feito com **Astro + TypeScript**. As notícias vivem como arquivos Markdown no próprio projeto (sem banco de dados).
 
 ## Como funciona
 
-1. `npm run coletar` lê os feeds em `src/config/fontes.ts`.
+1. `npm run coletar` lê os feeds em `src/config/fontes.ts` e os canais em `src/config/canais-youtube.ts`.
 2. Cada notícia vira um `.md` em `src/content/noticias/<Categoria>/<AAAA-MM>/`.
-3. Deduplica por `guid`/link e mantém até **20 notícias por categoria** (as mais recentes), alinhado ao site.
-4. O Astro gera o site (capa, categorias, artigo, eventos) a partir desses arquivos.
+3. Cada vídeo vira um `.md` em `src/content/videos/<CategoriaRelacionada>/<AAAA-MM>/`.
+4. Deduplica por `guid` e mantém até **20 notícias** e **5 vídeos** por categoria temática (os mais recentes).
+5. O Astro gera o site (capa, categorias, artigo, vídeos, eventos) a partir desses arquivos.
 
 ## Rodando localmente
 
@@ -34,7 +35,11 @@ O limite está em `src/lib/noticias-limites.ts` (`MAX_NOTICIAS_POR_CATEGORIA = 2
 
 ## Fontes
 
-Edite `src/config/fontes.ts` para adicionar/remover feeds. Cada fonte tem `nome`, `url`, `idioma` (`pt`/`en`, apenas informativo) e `categoria`.
+Edite `src/config/fontes.ts` para adicionar/remover feeds RSS. Cada fonte tem `nome`, `url`, `idioma` (`pt`/`en`, apenas informativo) e `categoria`.
+
+## Vídeos (YouTube)
+
+Canais em `src/config/canais-youtube.ts` (`channelId` + `categoriaRelacionada`). Coleta via feed Atom público do YouTube, sem API key.
 
 ## Deploy (GitHub + Vercel)
 

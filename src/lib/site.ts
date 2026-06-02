@@ -1,10 +1,16 @@
 import { CORES_CATEGORIA, type Categoria } from "../config/fontes";
+import { COR_YOUTUBE, NAV_YOUTUBE } from "../config/canais-youtube";
 
 export const TZ = "America/Sao_Paulo";
 export const NOME_SITE = "GPlay Newsletter";
+export { COR_YOUTUBE, NAV_YOUTUBE };
 
 export function corCategoria(cat: string): string {
   return CORES_CATEGORIA[cat as Categoria] ?? "#b3261e";
+}
+
+export function corCategoriaRelacionada(cat: string): string {
+  return corCategoria(cat);
 }
 
 export function slugCategoria(cat: string): string {

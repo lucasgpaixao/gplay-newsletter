@@ -1,0 +1,68 @@
+---
+import Base from "../../layouts/Base.astro";
+import CardVideo from "../../components/CardVideo.astro";
+import { videosPublicados } from "../../lib/conteudo";
+import { corCategoriaRelacionada, slugCategoria, dataLonga, horaCurta } from "../../lib/site";
+import { embedYoutube } from "../../lib/youtube";
+
+export async function getStaticPaths() {
+  const videos = await videosPublicados();
+  return videos.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry, todos: videos },
+  }));
+}
+
+const { entry, todos } = Astro.props;
+const d = entry.data;
+const cor = corCategoriaRelacionada(d.categoriaRelacionada);
+const embed = embedYoutube(d.videoId);
+
+const relacionados = todos
+  .filter(
+    (v) =>
+      v.data.categoriaRelacionada === d.categoriaRelacionada && v.slug !== entry.slug,
+  )
+  .slice(0, 3);
+---
+
+<Base titulo={d.titulo} ativo="YouTube" descricao={`${d.titulo} — ${d.canal} no YouTube`}>
+  <article class="artigo">
+    <a href={`/categoria/${slugCategoria(d.categoriaRelacionada)}`}>
+      <span class="chip" style={`background:${cor}`}>{d.categoriaRelacionada}</span>
+    </a>
+
+    <h1>{d.titulo}</h1>
+
+    <div class="card__meta" style="font-size:13px">
+      <span>{d.canal}</span>
+      <span>·</span>
+      <span>{dataLonga(d.publicado)}, {horaCurta(d.publicado)}</span>
+    </div>
+
+    <div class="video-embed">
+      <iframe
+        src={embed}
+        title={d.titulo}
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+        loading="lazy"
+        referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    </div>
+
+    <a class="artigo__fonte" href={d.link} target="_blank" rel="noopener">
+      Assistir no YouTube →
+    </a>
+  </article>
+
+  {
+    relacionados.length > 0 && (
+      <>
+        <div class="section-title">Mais em {d.categoriaRelacionada}</div>
+        <div class="grid grid--3">
+          {relacionados.map((v) => <CardVideo entry={v} />)}
+        </div>
+      </>
+    )
+  }
+</Base>

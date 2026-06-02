@@ -1,6 +1,6 @@
 ---
 import "../styles/global.css";
-import { NOME_SITE, dataLonga } from "../lib/site";
+import { NOME_SITE, dataLonga, NAV_YOUTUBE } from "../lib/site";
 import { CATEGORIAS } from "../content/config";
 import { slugCategoria } from "../lib/site";
 
@@ -58,6 +58,9 @@ const edicao = dataLonga(new Date());
             </a>
           ))
         }
+        <a href="/categoria/youtube" aria-current={ativo === "YouTube" ? "page" : undefined}>
+          {NAV_YOUTUBE}
+        </a>
         <a href="/eventos" aria-current={ativo === "eventos" ? "page" : undefined}>Eventos</a>
         <span class="nav__spacer"></span>
         <button id="btn-tema" class="btn-icon" type="button" aria-label="Alternar tema" title="Alternar tema claro/escuro">🌓</button>
@@ -71,10 +74,14 @@ const edicao = dataLonga(new Date());
     <footer class="rodape">
       <div class="container">
         <p>
-          <strong>{NOME_SITE}</strong> — agregador de noticias. Todos os titulos, resumos e imagens
-          pertencem aos seus respectivos veiculos; cada materia leva ao site de origem.
+          <strong>{NOME_SITE}</strong> — agregador de noticias. Titulos, resumos e imagens das materias
+          pertencem aos respectivos veiculos; cada noticia leva ao site de origem.
         </p>
-        <p>Conteudo coletado automaticamente via RSS.</p>
+        <p>Noticias coletadas automaticamente via RSS.</p>
+        <p>
+          Videos incorporados do YouTube; titulos e miniaturas pertencem aos canais de origem. Cada
+          video abre a pagina no GPlay com player e link para assistir no YouTube.
+        </p>
       </div>
     </footer>
 

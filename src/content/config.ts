@@ -24,6 +24,21 @@ const noticias = defineCollection({
   }),
 });
 
+const videos = defineCollection({
+  type: "content",
+  schema: z.object({
+    titulo: z.string(),
+    categoriaRelacionada: z.enum(CATEGORIAS),
+    canal: z.string(),
+    videoId: z.string().regex(/^[a-zA-Z0-9_-]{11}$/),
+    link: z.string().url(),
+    thumbnail: z.string().url(),
+    publicado: z.coerce.date(),
+    coletado: z.coerce.date(),
+    guid: z.string(),
+  }),
+});
+
 const eventos = defineCollection({
   type: "content",
   schema: z.object({
@@ -39,4 +54,4 @@ const eventos = defineCollection({
   }),
 });
 
-export const collections = { noticias, eventos };
+export const collections = { noticias, videos, eventos };

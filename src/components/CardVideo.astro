@@ -1,0 +1,35 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { corCategoriaRelacionada, slugCategoria, tempoRelativo } from "../lib/site";
+
+interface Props {
+  entry: CollectionEntry<"videos">;
+  destaque?: boolean;
+}
+
+const { entry, destaque = false } = Astro.props;
+const d = entry.data;
+const cor = corCategoriaRelacionada(d.categoriaRelacionada);
+const href = `/video/${entry.slug}`;
+---
+
+<article class={`card card--video${destaque ? " card--lead" : ""}`}>
+  <a class="card__media" href={href} style={`background-image:url('${d.thumbnail}')`}>
+    <span class="card__play" aria-hidden="true">▶</span>
+  </a>
+  <div class="card__body">
+    <div>
+      <a href={`/categoria/${slugCategoria(d.categoriaRelacionada)}`}>
+        <span class="chip" style={`background:${cor}`}>{d.categoriaRelacionada}</span>
+      </a>
+    </div>
+    <h3 class="card__title">
+      <a href={href}>{d.titulo}</a>
+    </h3>
+    <div class="card__meta">
+      <span>{d.canal}</span>
+      <span>·</span>
+      <span>{tempoRelativo(d.publicado)}</span>
+    </div>
+  </div>
+</article>
