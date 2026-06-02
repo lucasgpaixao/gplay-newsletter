@@ -28,11 +28,13 @@ const resto = noticias.slice(1);
     ) : (
       <>
         {lead && (
-          <div class="grid grid--lead" style="margin-bottom:8px">
+          <div class="grid" style="gap:16px;margin-bottom:8px">
             <CardNoticia entry={lead} destaque />
-            <div class="grid" style="gap:16px">
-              {resto.slice(0, 4).map((n) => <CardNoticia entry={n} />)}
-            </div>
+            {resto.slice(0, 4).length > 0 && (
+              <div class="grid grid--3">
+                {resto.slice(0, 4).map((n) => <CardNoticia entry={n} />)}
+              </div>
+            )}
           </div>
         )}
         {resto.length > 4 && (

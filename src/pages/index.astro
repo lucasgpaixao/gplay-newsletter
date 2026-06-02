@@ -43,11 +43,13 @@ const porCategoria = CATEGORIAS.map((c) => ({
     lead && (
       <>
         <div class="section-title">Manchetes</div>
-        <div class="grid grid--lead">
+        <div class="grid" style="gap:16px">
           <CardNoticia entry={lead} destaque />
-          <div class="grid" style="gap:16px">
-            {secundarias.map((n) => <CardNoticia entry={n} />)}
-          </div>
+          {secundarias.length > 0 && (
+            <div class="grid grid--3">
+              {secundarias.map((n) => <CardNoticia entry={n} />)}
+            </div>
+          )}
         </div>
       </>
     )
