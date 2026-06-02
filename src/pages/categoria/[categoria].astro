@@ -21,8 +21,13 @@ const lead = noticias[0];
 const resto = noticias.slice(1);
 ---
 
-<Base titulo={cat} ativo={cat} descricao={`Ultimas noticias de ${cat} no GPlay Newsletter.`}>
-  <div class="section-title" style={`color:${cor}`}>{cat}</div>
+<Base
+  titulo={cat}
+  ativo={cat}
+  descricao={`Ultimas noticias de ${cat} no GPlay Newsletter.`}
+  preloadImagem={lead?.data.imagem}
+>
+  <h1 class="section-title" style={`color:${cor}`}>{cat}</h1>
 
   {
     noticias.length === 0 ? (
@@ -31,17 +36,17 @@ const resto = noticias.slice(1);
       <>
         {lead && (
           <div class="grid" style="gap:16px;margin-bottom:8px">
-            <CardNoticia entry={lead} destaque />
+            <CardNoticia entry={lead} destaque nivelTitulo={2} prioridadeLcp={Boolean(lead.data.imagem)} />
             {resto.slice(0, 4).length > 0 && (
               <div class="grid grid--3">
-                {resto.slice(0, 4).map((n) => <CardNoticia entry={n} />)}
+                {resto.slice(0, 4).map((n) => <CardNoticia entry={n} nivelTitulo={2} />)}
               </div>
             )}
           </div>
         )}
         {resto.length > 4 && (
           <div class="grid grid--3" style="margin-top:24px">
-            {resto.slice(4).map((n) => <CardNoticia entry={n} />)}
+            {resto.slice(4).map((n) => <CardNoticia entry={n} nivelTitulo={2} />)}
           </div>
         )}
       </>
@@ -51,15 +56,13 @@ const resto = noticias.slice(1);
   {
     videosTema.length > 0 && (
       <>
-        <div class="section-title" style="margin-top:32px">
+        <h2 class="section-title" style="margin-top:32px">
           Videos
-          <a href="/categoria/youtube" style="font-size:12px;letter-spacing:0;text-transform:none;font-weight:600">
-            ver tudo no YouTube →
-          </a>
-        </div>
+          <a href="/categoria/youtube">ver tudo no YouTube →</a>
+        </h2>
         <div class="grid grid--3">
           {videosTema.map((v) => (
-            <CardVideo entry={v} />
+            <CardVideo entry={v} nivelTitulo={2} />
           ))}
         </div>
       </>

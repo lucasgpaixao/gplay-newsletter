@@ -4,9 +4,11 @@ import { corCategoria } from "../lib/site";
 
 interface Props {
   entry: CollectionEntry<"eventos">;
+  nivelTitulo?: 2 | 3;
 }
 
-const { entry } = Astro.props;
+const { entry, nivelTitulo = 3 } = Astro.props;
+const TituloTag = nivelTitulo === 2 ? "h2" : "h3";
 const e = entry.data;
 const cor = corCategoria(e.categoria);
 const inicio = e.inicio;
@@ -25,10 +27,10 @@ const hora = new Intl.DateTimeFormat("pt-BR", { hour: "2-digit", minute: "2-digi
     <div class="evento__mes">{mes}</div>
   </div>
   <div>
-    <h3 class="evento__nome">
+    <TituloTag class="evento__nome">
       {e.nome}
       {!e.confirmado && <span class="chip chip--ghost" style="margin-left:8px">a confirmar</span>}
-    </h3>
+    </TituloTag>
     <p class="evento__desc">{e.descricao}</p>
     <p class="evento__desc" style="margin-top:4px;font-size:12.5px">
       {hora} (horario de Brasilia){e.link && <> · <a href={e.link} target="_blank" rel="noopener">site oficial</a></>}

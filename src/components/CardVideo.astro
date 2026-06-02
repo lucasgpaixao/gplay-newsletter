@@ -1,34 +1,42 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import { corCategoriaRelacionada, slugCategoria, tempoRelativo } from "../lib/site";
+import { attrsImagemCard } from "../lib/imagem";
 
 interface Props {
   entry: CollectionEntry<"videos">;
   destaque?: boolean;
+  nivelTitulo?: 2 | 3;
+  prioridadeLcp?: boolean;
 }
 
-const { entry, destaque = false } = Astro.props;
+const { entry, destaque = false, nivelTitulo = 3, prioridadeLcp = false } = Astro.props;
 const d = entry.data;
 const cor = corCategoriaRelacionada(d.categoriaRelacionada);
 const href = `/video/${entry.slug}`;
+const TituloTag = nivelTitulo === 2 ? "h2" : "h3";
+const imgAttrs = attrsImagemCard({ lcp: prioridadeLcp });
+const labelMedia = `Assistir video: ${d.titulo}`;
+const labelCategoria = `Ver videos de ${d.categoriaRelacionada}`;
 ---
 
 <article class={`card card--video${destaque ? " card--lead" : ""}`}>
-  <a class="card__media" href={href} style={`background-image:url('${d.thumbnail}')`}>
+  <a class="card__media" href={href} aria-label={labelMedia}>
+    <img src={d.thumbnail} alt="" width="480" height="360" {...imgAttrs} />
     <span class="card__play" aria-hidden="true">▶</span>
   </a>
   <div class="card__body">
     <div>
-      <a href={`/categoria/${slugCategoria(d.categoriaRelacionada)}`}>
+      <a href={`/categoria/${slugCategoria(d.categoriaRelacionada)}`} aria-label={labelCategoria}>
         <span class="chip" style={`background:${cor}`}>{d.categoriaRelacionada}</span>
       </a>
     </div>
-    <h3 class="card__title">
+    <TituloTag class="card__title">
       <a href={href}>{d.titulo}</a>
-    </h3>
+    </TituloTag>
     <div class="card__meta">
       <span>{d.canal}</span>
-      <span>·</span>
+      <span aria-hidden="true">·</span>
       <span>{tempoRelativo(d.publicado)}</span>
     </div>
   </div>

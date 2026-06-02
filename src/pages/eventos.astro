@@ -15,14 +15,14 @@ const passados = todos.filter((e) => {
 ---
 
 <Base titulo="Eventos" ativo="eventos" descricao="Cobertura especial: State of Play, Summer Game Fest, Copa do Mundo e mais.">
-  <div class="section-title">Cobertura Especial — Eventos</div>
+  <h1 class="section-title">Cobertura Especial — Eventos</h1>
 
   <div class="grid" style="gap:16px">
     {proximos.map((e) => {
       const rel = noticiasDoEvento(e, noticias).slice(0, 3);
       return (
         <div>
-          <EventoCard entry={e} />
+          <EventoCard entry={e} nivelTitulo={2} />
           {rel.length > 0 && (
             <div class="grid grid--3" style="margin-top:14px">
               {rel.map((n) => <CardNoticia entry={n} />)}
@@ -36,7 +36,7 @@ const passados = todos.filter((e) => {
   {
     passados.length > 0 && (
       <>
-        <div class="section-title">Eventos encerrados</div>
+        <h2 class="section-title">Eventos encerrados</h2>
         <div class="grid" style="gap:14px">
           {passados.map((e) => <EventoCard entry={e} />)}
         </div>

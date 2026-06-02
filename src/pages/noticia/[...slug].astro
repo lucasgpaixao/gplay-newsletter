@@ -3,6 +3,7 @@ import Base from "../../layouts/Base.astro";
 import CardNoticia from "../../components/CardNoticia.astro";
 import { noticiasPublicadas } from "../../lib/conteudo";
 import { corCategoria, slugCategoria, dataLonga, horaCurta } from "../../lib/site";
+import { attrsImagemHero } from "../../lib/imagem";
 
 export async function getStaticPaths() {
   const noticias = await noticiasPublicadas();
@@ -21,9 +22,9 @@ const relacionadas = todas
   .slice(0, 3);
 ---
 
-<Base titulo={d.titulo} ativo={d.categoria} descricao={d.resumo || d.titulo}>
+<Base titulo={d.titulo} ativo={d.categoria} descricao={d.resumo || d.titulo} preloadImagem={d.imagem}>
   <article class="artigo">
-    <a href={`/categoria/${slugCategoria(d.categoria)}`}>
+    <a href={`/categoria/${slugCategoria(d.categoria)}`} aria-label={`Ver noticias de ${d.categoria}`}>
       <span class="chip" style={`background:${cor}`}>{d.categoria}</span>
     </a>
 
@@ -36,7 +37,19 @@ const relacionadas = todas
       <span>{dataLonga(d.publicado)}, {horaCurta(d.publicado)}</span>
     </div>
 
-    {d.imagem && <img class="artigo__hero" src={d.imagem} alt={d.titulo} loading="lazy" referrerpolicy="no-referrer" />}
+    {
+      d.imagem && (
+        <img
+          class="artigo__hero"
+          src={d.imagem}
+          alt={d.titulo}
+          width="1200"
+          height="675"
+          referrerpolicy="no-referrer"
+          {...attrsImagemHero}
+        />
+      )
+    }
 
     <div class="artigo__corpo">
       <p>{d.resumo || "Resumo nao disponivel para esta materia."}</p>
@@ -50,7 +63,7 @@ const relacionadas = todas
   {
     relacionadas.length > 0 && (
       <>
-        <div class="section-title">Mais em {d.categoria}</div>
+        <h2 class="section-title">Mais em {d.categoria}</h2>
         <div class="grid grid--3">
           {relacionadas.map((n) => <CardNoticia entry={n} />)}
         </div>

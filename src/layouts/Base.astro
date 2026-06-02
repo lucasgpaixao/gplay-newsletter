@@ -8,11 +8,20 @@ interface Props {
   titulo?: string;
   descricao?: string;
   ativo?: string;
+  /** URL da imagem LCP para preload (ex.: manchete da capa). */
+  preloadImagem?: string;
 }
 
-const { titulo, descricao = "Jornal de noticias sobre Jogos, Futebol, Tecnologia, IA e Filmes.", ativo } = Astro.props;
+const {
+  titulo,
+  descricao = "Jornal de noticias sobre Jogos, Futebol, Tecnologia, IA e Filmes.",
+  ativo,
+  preloadImagem,
+} = Astro.props;
 const tituloPagina = titulo ? `${titulo} — ${NOME_SITE}` : NOME_SITE;
 const edicao = dataLonga(new Date());
+/** H1 unico por pagina: nome do site na capa; nas demais, titulo da materia/secao no main. */
+const mastheadEhH1 = !titulo;
 ---
 
 <!doctype html>
@@ -26,6 +35,8 @@ const edicao = dataLonga(new Date());
     <meta property="og:description" content={descricao} />
     <meta property="og:type" content="website" />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%97%9E%EF%B8%8F%3C/text%3E%3C/svg%3E" />
+    {preloadImagem && <link rel="preload" as="image" href={preloadImagem} fetchpriority="high" />}
+    <slot name="head" />
     <script is:inline>
       (function () {
         try {
@@ -43,27 +54,53 @@ const edicao = dataLonga(new Date());
           <span>{edicao}</span>
           <span>Edicao Digital</span>
         </div>
-        <h1 class="masthead__title"><a href="/">{NOME_SITE}</a></h1>
+        {
+          mastheadEhH1 ? (
+            <h1 class="masthead__title">
+              <a href="/">{NOME_SITE}</a>
+            </h1>
+          ) : (
+            <p class="masthead__title">
+              <a href="/">{NOME_SITE}</a>
+            </p>
+          )
+        }
         <div class="masthead__sub">Jogos · Futebol · Tecnologia · IA · Filmes</div>
       </div>
     </header>
 
-    <nav class="nav">
+    <nav class="nav" id="nav-principal">
       <div class="container nav__inner">
-        <a href="/" aria-current={ativo === "capa" ? "page" : undefined}>Capa</a>
-        {
-          CATEGORIAS.map((c) => (
-            <a href={`/categoria/${slugCategoria(c)}`} aria-current={ativo === c ? "page" : undefined}>
-              {c}
+        <button
+          type="button"
+          class="nav__toggle btn-icon"
+          id="btn-nav-menu"
+          aria-expanded="false"
+          aria-controls="nav-menu"
+          aria-label="Abrir menu de navegacao"
+        >
+          <span class="nav__toggle-bars" aria-hidden="true"></span>
+        </button>
+        <div id="nav-menu" class="nav__menu">
+          <div class="nav__links">
+            <a href="/" aria-current={ativo === "capa" ? "page" : undefined}>Capa</a>
+            {
+              CATEGORIAS.map((c) => (
+                <a href={`/categoria/${slugCategoria(c)}`} aria-current={ativo === c ? "page" : undefined}>
+                  {c}
+                </a>
+              ))
+            }
+            <a href="/categoria/youtube" aria-current={ativo === "YouTube" ? "page" : undefined}>
+              {NAV_YOUTUBE}
             </a>
-          ))
-        }
-        <a href="/categoria/youtube" aria-current={ativo === "YouTube" ? "page" : undefined}>
-          {NAV_YOUTUBE}
-        </a>
-        <a href="/eventos" aria-current={ativo === "eventos" ? "page" : undefined}>Eventos</a>
-        <span class="nav__spacer"></span>
-        <button id="btn-tema" class="btn-icon" type="button" aria-label="Alternar tema" title="Alternar tema claro/escuro">🌓</button>
+            <a href="/eventos" aria-current={ativo === "eventos" ? "page" : undefined}>Eventos</a>
+          </div>
+        </div>
+        <span class="nav__spacer" aria-hidden="true"></span>
+        <button id="btn-tema" class="btn-icon nav__tema" type="button" aria-label="Alternar tema" title="Alternar tema claro/escuro">
+          🌓
+        </button>
       </div>
     </nav>
 
@@ -96,6 +133,41 @@ const edicao = dataLonga(new Date());
             try {
               localStorage.setItem("gplay-tema", novo);
             } catch (e) {}
+          });
+        }
+
+        var nav = document.getElementById("nav-principal");
+        var btnMenu = document.getElementById("btn-nav-menu");
+        var painelMenu = document.getElementById("nav-menu");
+        function fecharMenuNav() {
+          if (!nav || !btnMenu) return;
+          nav.classList.remove("nav--aberta");
+          btnMenu.setAttribute("aria-expanded", "false");
+          btnMenu.setAttribute("aria-label", "Abrir menu de navegacao");
+          document.body.classList.remove("nav-aberta");
+        }
+        function abrirMenuNav() {
+          if (!nav || !btnMenu) return;
+          nav.classList.add("nav--aberta");
+          btnMenu.setAttribute("aria-expanded", "true");
+          btnMenu.setAttribute("aria-label", "Fechar menu de navegacao");
+          document.body.classList.add("nav-aberta");
+        }
+        function alternarMenuNav() {
+          if (!nav) return;
+          if (nav.classList.contains("nav--aberta")) fecharMenuNav();
+          else abrirMenuNav();
+        }
+        if (nav && btnMenu && painelMenu) {
+          btnMenu.addEventListener("click", alternarMenuNav);
+          painelMenu.querySelectorAll("a").forEach(function (link) {
+            link.addEventListener("click", fecharMenuNav);
+          });
+          document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape") fecharMenuNav();
+          });
+          window.addEventListener("resize", function () {
+            if (window.matchMedia("(min-width: 768px)").matches) fecharMenuNav();
           });
         }
         // contagem regressiva dos eventos

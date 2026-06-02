@@ -28,7 +28,10 @@ const relacionados = todos
 
 <Base titulo={d.titulo} ativo="YouTube" descricao={`${d.titulo} — ${d.canal} no YouTube`}>
   <article class="artigo">
-    <a href={`/categoria/${slugCategoria(d.categoriaRelacionada)}`}>
+    <a
+      href={`/categoria/${slugCategoria(d.categoriaRelacionada)}`}
+      aria-label={`Ver noticias de ${d.categoriaRelacionada}`}
+    >
       <span class="chip" style={`background:${cor}`}>{d.categoriaRelacionada}</span>
     </a>
 
@@ -58,7 +61,7 @@ const relacionados = todos
   {
     relacionados.length > 0 && (
       <>
-        <div class="section-title">Mais em {d.categoriaRelacionada}</div>
+        <h2 class="section-title">Mais em {d.categoriaRelacionada}</h2>
         <div class="grid grid--3">
           {relacionados.map((v) => <CardVideo entry={v} />)}
         </div>

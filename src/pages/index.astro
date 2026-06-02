@@ -23,7 +23,7 @@ const porCategoria = CATEGORIAS.map((c) => ({
 })).filter((g) => g.itens.length > 0);
 ---
 
-<Base ativo="capa">
+<Base ativo="capa" preloadImagem={lead?.data.imagem}>
   {
     noticias.length === 0 && (
       <p class="aviso" style="margin-top:28px">
@@ -35,7 +35,7 @@ const porCategoria = CATEGORIAS.map((c) => ({
   {
     eventos.length > 0 && (
       <>
-        <div class="section-title">Proximos Eventos</div>
+        <h2 class="section-title">Proximos Eventos</h2>
         <div class="grid" style="gap:14px">
           {eventos.map((e) => <EventoCard entry={e} />)}
         </div>
@@ -46,9 +46,9 @@ const porCategoria = CATEGORIAS.map((c) => ({
   {
     lead && (
       <>
-        <div class="section-title">Manchetes</div>
+        <h2 class="section-title">Manchetes</h2>
         <div class="grid" style="gap:16px">
-          <CardNoticia entry={lead} destaque />
+          <CardNoticia entry={lead} destaque prioridadeLcp={Boolean(lead.data.imagem)} />
           {secundarias.length > 0 && (
             <div class="grid grid--3">
               {secundarias.map((n) => <CardNoticia entry={n} />)}
@@ -62,14 +62,12 @@ const porCategoria = CATEGORIAS.map((c) => ({
   {
     videoLead && (
       <>
-        <div class="section-title" style={`color:${COR_YOUTUBE}`}>
+        <h2 class="section-title" style={`color:${COR_YOUTUBE}`}>
           {NAV_YOUTUBE}
-          <a href="/categoria/youtube" style="font-size:12px;letter-spacing:0;text-transform:none;font-weight:600">
-            ver tudo →
-          </a>
-        </div>
+          <a href="/categoria/youtube">ver tudo →</a>
+        </h2>
         <div class="grid" style="gap:16px">
-          <CardVideo entry={videoLead} destaque />
+          <CardVideo entry={videoLead} destaque prioridadeLcp />
           {videosSecundarios.length > 0 && (
             <div class="grid grid--3">
               {videosSecundarios.map((v) => <CardVideo entry={v} />)}
@@ -83,7 +81,7 @@ const porCategoria = CATEGORIAS.map((c) => ({
   {
     recentes.length > 0 && (
       <>
-        <div class="section-title">Mais recentes</div>
+        <h2 class="section-title">Mais recentes</h2>
         <div class="grid grid--3">
           {recentes.map((n) => <CardNoticia entry={n} />)}
         </div>
@@ -94,12 +92,10 @@ const porCategoria = CATEGORIAS.map((c) => ({
   {
     porCategoria.map((g) => (
       <>
-        <div class="section-title">
+        <h2 class="section-title">
           {g.cat}
-          <a href={`/categoria/${slugCategoria(g.cat)}`} style="font-size:12px;letter-spacing:0;text-transform:none;font-weight:600">
-            ver tudo →
-          </a>
-        </div>
+          <a href={`/categoria/${slugCategoria(g.cat)}`}>ver tudo →</a>
+        </h2>
         <div class="grid grid--3">
           {g.itens.map((n) => (
             <CardNoticia entry={n} />

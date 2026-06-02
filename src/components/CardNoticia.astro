@@ -1,36 +1,53 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import { corCategoria, slugCategoria, tempoRelativo } from "../lib/site";
+import { attrsImagemCard } from "../lib/imagem";
 
 interface Props {
   entry: CollectionEntry<"noticias">;
   destaque?: boolean;
+  /** Nivel do titulo do card na hierarquia da pagina (h2 em listas sob h1, h3 sob h2). */
+  nivelTitulo?: 2 | 3;
+  /** Prioriza carregamento da imagem (manchete acima da dobra). */
+  prioridadeLcp?: boolean;
 }
 
-const { entry, destaque = false } = Astro.props;
+const { entry, destaque = false, nivelTitulo = 3, prioridadeLcp = false } = Astro.props;
 const d = entry.data;
 const cor = corCategoria(d.categoria);
 const href = `/noticia/${entry.slug}`;
 const inicialCat = d.categoria.charAt(0);
+const TituloTag = nivelTitulo === 2 ? "h2" : "h3";
+const imgAttrs = attrsImagemCard({ lcp: prioridadeLcp });
+const labelMedia = `Ler noticia: ${d.titulo}`;
+const labelCategoria = `Ver noticias de ${d.categoria}`;
 ---
 
 <article class={`card${destaque ? " card--lead" : ""}`}>
-  <a class="card__media" href={href} style={d.imagem ? `background-image:url('${d.imagem}')` : `background:${cor}`}>
-    {!d.imagem && <span class="card__ph">{inicialCat}</span>}
+  <a class="card__media" href={href} aria-label={labelMedia} style={!d.imagem ? `background:${cor}` : undefined}>
+    {
+      d.imagem ? (
+        <img src={d.imagem} alt="" width="640" height="360" referrerpolicy="no-referrer" {...imgAttrs} />
+      ) : (
+        <span class="card__ph" aria-hidden="true">
+          {inicialCat}
+        </span>
+      )
+    }
   </a>
   <div class="card__body">
     <div>
-      <a href={`/categoria/${slugCategoria(d.categoria)}`}>
+      <a href={`/categoria/${slugCategoria(d.categoria)}`} aria-label={labelCategoria}>
         <span class="chip" style={`background:${cor}`}>{d.categoria}</span>
       </a>
     </div>
-    <h3 class="card__title">
+    <TituloTag class="card__title">
       <a href={href}>{d.titulo}</a>
-    </h3>
+    </TituloTag>
     {destaque && d.resumo && <p class="card__resumo">{d.resumo}</p>}
     <div class="card__meta">
       <span>{d.fonte}</span>
-      <span>·</span>
+      <span aria-hidden="true">·</span>
       <span>{tempoRelativo(d.publicado)}</span>
     </div>
   </div>
