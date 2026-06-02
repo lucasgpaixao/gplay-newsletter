@@ -29,7 +29,15 @@ jobs:
           cache: npm
 
       - name: Instalar dependencias
-        run: npm ci
+        run: |
+          npm config set fetch-retries 5
+          npm config set fetch-retry-mintimeout 20000
+          npm config set fetch-retry-maxtimeout 120000
+          for i in 1 2 3; do
+            npm ci && break
+            echo "npm ci falhou (tentativa $i), repetindo em 15s..."
+            sleep 15
+          done
 
       - name: Coletar
         env:
