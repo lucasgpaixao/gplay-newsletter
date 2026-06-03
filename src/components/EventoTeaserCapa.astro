@@ -1,0 +1,42 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { corCategoria, horaCurta } from "../lib/site";
+import { hrefEvento } from "../lib/eventos";
+
+interface Props {
+  entry: CollectionEntry<"eventos">;
+}
+
+const { entry } = Astro.props;
+const e = entry.data;
+const cor = corCategoria(e.categoria);
+const href = hrefEvento(entry.slug);
+const inicio = e.inicio;
+const fim = e.fim ?? new Date(inicio.getTime() + 2 * 60 * 60 * 1000);
+const quando = new Intl.DateTimeFormat("pt-BR", {
+  weekday: "short",
+  day: "2-digit",
+  month: "short",
+  timeZone: "America/Sao_Paulo",
+}).format(inicio);
+---
+
+<section class="evento-teaser" style={`--cat:${cor}`} aria-labelledby="titulo-evento-teaser">
+  <h2 id="titulo-evento-teaser" class="section-title">Proximo evento</h2>
+  <a class="evento-teaser__link" href={href}>
+    <span class="evento-teaser__nome">{e.nome}</span>
+    <span class="evento-teaser__meta">
+      {quando} · {horaCurta(inicio)} (Brasilia)
+    </span>
+    <span class="evento-teaser__cta">Ver cobertura →</span>
+    <span
+      class="countdown evento-teaser__countdown"
+      data-inicio={inicio.toISOString()}
+      data-fim={fim.toISOString()}
+      aria-hidden="true"
+    >
+      <span class="countdown__num">--</span>
+      <span class="countdown__label"></span>
+    </span>
+  </a>
+</section>

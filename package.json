@@ -11,7 +11,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "coletar": "tsx scripts/coletar.ts",
-    "coletar:limpar": "tsx scripts/coletar.ts --limpar"
+    "coletar:limpar": "tsx scripts/coletar.ts --limpar",
+    "coletar:gate-acelerada": "tsx scripts/deve-coletar-acelerada.ts"
   },
   "dependencies": {
     "astro": "^4.16.18"

@@ -45,7 +45,10 @@ Canais em `src/config/canais-youtube.ts` (`channelId` + `categoriaRelacionada`).
 
 1. Crie um repositório no GitHub e faça push deste projeto.
 2. Em [vercel.com](https://vercel.com) → **Add New Project** → importe o repositório. O framework Astro é detectado automaticamente (build `npm run build`, saída `dist`).
-3. A coleta automática roda via **GitHub Actions** (`.github/workflows/coletar.yml`) a cada 1h: ela commita as notícias novas e a Vercel republica sozinha.
+3. A coleta automática roda via **GitHub Actions**:
+   - `coletar.yml` — a cada 1h (notícias + vídeos);
+   - `coletar-acelerada.yml` — a cada 20 min, **somente** enquanto o **evento em foco** estiver ao vivo (entre `inicio` e `fim` no markdown do evento).
+   Commits no acervo disparam republicação na Vercel.
 
 ## Eventos
 

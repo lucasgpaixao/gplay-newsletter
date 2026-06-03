@@ -2,13 +2,29 @@
 import Base from "../layouts/Base.astro";
 import CardNoticia from "../components/CardNoticia.astro";
 import CardVideo from "../components/CardVideo.astro";
-import EventoCard from "../components/EventoCard.astro";
+import EventoFocoCapa from "../components/EventoFocoCapa.astro";
+import EventoTeaserCapa from "../components/EventoTeaserCapa.astro";
 import { CATEGORIAS } from "../content/config";
-import { noticiasPublicadas, proximosEventos, videosDestaqueCapa } from "../lib/conteudo";
+import { noticiasPublicadas, videosPublicados, videosDestaqueCapa } from "../lib/conteudo";
+import {
+  eventoEmFoco,
+  eventoTeaserCapa,
+  noticiasDoEvento,
+  videosDoEvento,
+} from "../lib/eventos";
 import { slugCategoria, COR_YOUTUBE, NAV_YOUTUBE } from "../lib/site";
 
 const noticias = await noticiasPublicadas();
-const eventos = (await proximosEventos()).slice(0, 3);
+const videos = await videosPublicados();
+const foco = await eventoEmFoco();
+const teaser = foco ? null : await eventoTeaserCapa();
+const coberturaFoco = foco
+  ? {
+      noticias: noticiasDoEvento(foco, noticias),
+      videos: videosDoEvento(foco, videos),
+    }
+  : null;
+
 const videosCapa = await videosDestaqueCapa();
 const videoLead = videosCapa[0];
 const videosSecundarios = videosCapa.slice(1);
@@ -33,15 +49,16 @@ const porCategoria = CATEGORIAS.map((c) => ({
   }
 
   {
-    eventos.length > 0 && (
-      <>
-        <h2 class="section-title">Proximos Eventos</h2>
-        <div class="grid" style="gap:14px">
-          {eventos.map((e) => <EventoCard entry={e} />)}
-        </div>
-      </>
+    foco && coberturaFoco && (
+      <EventoFocoCapa
+        entry={foco}
+        noticias={coberturaFoco.noticias}
+        videos={coberturaFoco.videos}
+      />
     )
   }
+
+  {teaser && <EventoTeaserCapa entry={teaser} />}
 
   {
     lead && (

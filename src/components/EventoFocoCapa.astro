@@ -1,0 +1,77 @@
+---
+import type { CollectionEntry } from "astro:content";
+import CardNoticia from "./CardNoticia.astro";
+import CardVideo from "./CardVideo.astro";
+import EventoCard from "./EventoCard.astro";
+import {
+  eventoAoVivo,
+  eventoEncerrado,
+  hrefEvento,
+  INTERVALO_COLETA_PADRAO_LABEL,
+  intervaloAtualizacaoAoVivo,
+  ultimaColetaCobertura,
+} from "../lib/eventos";
+import { horaCurta } from "../lib/site";
+
+interface Props {
+  entry: CollectionEntry<"eventos">;
+  noticias: CollectionEntry<"noticias">[];
+  videos: CollectionEntry<"videos">[];
+}
+
+const { entry, noticias, videos } = Astro.props;
+const href = hrefEvento(entry.slug);
+const amostraN = noticias.slice(0, 3);
+const amostraV = videos.slice(0, 2);
+const agora = Date.now();
+const aoVivo = eventoAoVivo(entry.data, agora);
+const encerrado = eventoEncerrado(entry.data, agora);
+const ultimaColeta = ultimaColetaCobertura(noticias, videos);
+const intervaloLabel = await intervaloAtualizacaoAoVivo(entry, agora);
+---
+
+<section class="evento-foco" aria-labelledby="titulo-evento-foco">
+  <h2 id="titulo-evento-foco" class="section-title">
+    Evento em foco
+    <a href={href}>cobertura completa →</a>
+  </h2>
+  {
+    aoVivo && (
+      <p class="evento-pagina__banner evento-pagina__banner--vivo" role="status">
+        Ao vivo — cobertura atualizada a cada {intervaloLabel}
+        {ultimaColeta && <> · ultima coleta {horaCurta(ultimaColeta)}</>}
+      </p>
+    )
+  }
+  {
+    !aoVivo && !encerrado && (
+      <p class="evento-pagina__banner" role="status">
+        Cobertura em preparacao — atualizada a cada {INTERVALO_COLETA_PADRAO_LABEL}
+        {ultimaColeta && <> · ultima coleta {horaCurta(ultimaColeta)}</>}
+      </p>
+    )
+  }
+  <div class="evento-foco__hero">
+    <EventoCard entry={entry} nivelTitulo={2} linkPagina />
+  </div>
+  {
+    (amostraN.length > 0 || amostraV.length > 0) && (
+      <div class="evento-foco__cobertura">
+        {amostraN.length > 0 && (
+          <div class="grid grid--3" style="gap:14px">
+            {amostraN.map((n) => (
+              <CardNoticia entry={n} />
+            ))}
+          </div>
+        )}
+        {amostraV.length > 0 && (
+          <div class="grid grid--3" style="gap:14px;margin-top:14px">
+            {amostraV.map((v) => (
+              <CardVideo entry={v} />
+            ))}
+          </div>
+        )}
+      </div>
+    )
+  }
+</section>

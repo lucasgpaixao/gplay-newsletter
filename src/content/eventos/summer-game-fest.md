@@ -6,7 +6,7 @@ inicio: 2026-06-05T18:00:00-03:00
 fim: 2026-06-05T20:00:00-03:00
 confirmado: true
 link: https://www.summergamefest.com/
-destaque: true
+destaque: false
 keywords:
   - summer game fest
   - sgf

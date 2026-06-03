@@ -6,7 +6,7 @@ inicio: 2026-06-11T13:00:00-03:00
 fim: 2026-07-19T18:00:00-03:00
 confirmado: true
 link: https://www.fifa.com/pt/
-destaque: true
+destaque: false
 keywords:
   - copa do mundo
   - world cup

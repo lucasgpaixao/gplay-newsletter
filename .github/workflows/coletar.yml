@@ -1,7 +1,7 @@
 name: Coletar noticias
 
-# Coleta automatica dos feeds RSS, traduz EN->PT e commita as notas.
-# A Vercel publica sozinha a cada push no branch principal.
+# Coleta horaria de noticias (RSS) e videos (YouTube). Durante evento em foco ao vivo,
+# coletar-acelerada.yml roda a cada 20 min. Mesma fila de commit (concurrency: coletar).
 
 on:
   schedule:
@@ -46,7 +46,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add src/content/noticias
+          git add src/content/noticias src/content/videos
           if git diff --staged --quiet; then
             echo "Sem novidades nesta rodada."
           else

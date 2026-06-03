@@ -97,14 +97,4 @@ export async function videosBlocoTematico(
   return doTema.slice(0, MAX_VIDEOS_PAGINA_TEMATICA);
 }
 
-export function noticiasDoEvento(
-  evento: CollectionEntry<"eventos">,
-  noticias: CollectionEntry<"noticias">[],
-): CollectionEntry<"noticias">[] {
-  const kws = evento.data.keywords.map((k) => k.toLowerCase());
-  if (!kws.length) return [];
-  return noticias.filter((n) => {
-    const texto = `${n.data.titulo} ${n.data.titulo_original ?? ""} ${n.data.resumo}`.toLowerCase();
-    return kws.some((k) => texto.includes(k));
-  });
-}
+export { noticiasDoEvento, videosDoEvento } from "./eventos";

@@ -1,13 +1,17 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import { corCategoria } from "../lib/site";
+import { hrefEvento } from "../lib/eventos";
 
 interface Props {
   entry: CollectionEntry<"eventos">;
   nivelTitulo?: 2 | 3;
+  /** Link para a pagina de cobertura do evento no GPlay. */
+  linkPagina?: boolean;
 }
 
-const { entry, nivelTitulo = 3 } = Astro.props;
+const { entry, nivelTitulo = 3, linkPagina = false } = Astro.props;
+const paginaHref = linkPagina ? hrefEvento(entry.slug) : null;
 const TituloTag = nivelTitulo === 2 ? "h2" : "h3";
 const e = entry.data;
 const cor = corCategoria(e.categoria);
@@ -28,7 +32,13 @@ const hora = new Intl.DateTimeFormat("pt-BR", { hour: "2-digit", minute: "2-digi
   </div>
   <div>
     <TituloTag class="evento__nome">
-      {e.nome}
+      {
+        paginaHref ? (
+          <a href={paginaHref}>{e.nome}</a>
+        ) : (
+          e.nome
+        )
+      }
       {!e.confirmado && <span class="chip chip--ghost" style="margin-left:8px">a confirmar</span>}
     </TituloTag>
     <p class="evento__desc">{e.descricao}</p>

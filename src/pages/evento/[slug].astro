@@ -1,0 +1,112 @@
+---
+import Base from "../../layouts/Base.astro";
+import CardNoticia from "../../components/CardNoticia.astro";
+import CardVideo from "../../components/CardVideo.astro";
+import EventoCard from "../../components/EventoCard.astro";
+import { getCollection } from "astro:content";
+import { noticiasPublicadas, videosPublicados } from "../../lib/conteudo";
+import {
+  eventoAoVivo,
+  eventoEncerrado,
+  INTERVALO_COLETA_PADRAO_LABEL,
+  intervaloAtualizacaoAoVivo,
+  noticiasDoEvento,
+  ultimaColetaCobertura,
+  videosDoEvento,
+} from "../../lib/eventos";
+import { corCategoria, dataLonga, horaCurta } from "../../lib/site";
+
+export async function getStaticPaths() {
+  const eventos = await getCollection("eventos");
+  return eventos.map((e) => ({ params: { slug: e.slug }, props: { entry: e } }));
+}
+
+interface Props {
+  entry: Awaited<ReturnType<typeof getCollection<"eventos">>>[number];
+}
+
+const { entry } = Astro.props;
+const agora = Date.now();
+const e = entry.data;
+const encerrado = eventoEncerrado(e, agora);
+const aoVivo = eventoAoVivo(e, agora);
+
+const todasNoticias = await noticiasPublicadas();
+const todosVideos = await videosPublicados();
+const relNoticias = noticiasDoEvento(entry, todasNoticias, agora).sort(
+  (a, b) => b.data.publicado.getTime() - a.data.publicado.getTime(),
+);
+const relVideos = videosDoEvento(entry, todosVideos, agora).sort(
+  (a, b) => b.data.publicado.getTime() - a.data.publicado.getTime(),
+);
+const ultimaColeta = ultimaColetaCobertura(relNoticias, relVideos);
+const intervaloLabel = await intervaloAtualizacaoAoVivo(entry, agora);
+const cor = corCategoria(e.categoria);
+---
+
+<Base
+  titulo={e.nome}
+  ativo="eventos"
+  descricao={e.descricao || `Cobertura de ${e.nome} no GPlay Newsletter.`}
+>
+  <article class="evento-pagina" style={`--cat:${cor}`}>
+    {
+      aoVivo && (
+        <p class="evento-pagina__banner evento-pagina__banner--vivo" role="status">
+          Ao vivo — cobertura atualizada a cada {intervaloLabel}
+          {ultimaColeta && <> · ultima coleta {horaCurta(ultimaColeta)}</>}
+        </p>
+      )
+    }
+    {
+      encerrado && (
+        <p class="evento-pagina__banner evento-pagina__banner--arquivo" role="status">
+          Evento encerrado — cobertura congelada ({dataLonga(e.inicio)})
+        </p>
+      )
+    }
+    {
+      !aoVivo && !encerrado && (
+        <p class="evento-pagina__banner" role="status">
+          Cobertura em preparacao — atualizada a cada {INTERVALO_COLETA_PADRAO_LABEL}
+          {ultimaColeta && <> · ultima coleta {horaCurta(ultimaColeta)}</>}
+        </p>
+      )
+    }
+
+    <h1 class="section-title" style="margin-top:0">{e.nome}</h1>
+    <EventoCard entry={entry} nivelTitulo={2} />
+
+    {
+      relNoticias.length > 0 && (
+        <>
+          <h2 class="section-title">Noticias</h2>
+          <div class="grid grid--3">
+            {relNoticias.map((n) => (
+              <CardNoticia entry={n} nivelTitulo={3} />
+            ))}
+          </div>
+        </>
+      )
+    }
+
+    {
+      relVideos.length > 0 && (
+        <>
+          <h2 class="section-title">Videos</h2>
+          <div class="grid grid--3">
+            {relVideos.map((v) => (
+              <CardVideo entry={v} nivelTitulo={3} />
+            ))}
+          </div>
+        </>
+      )
+    }
+
+    {
+      relNoticias.length === 0 && relVideos.length === 0 && (
+        <p class="aviso">Ainda nao ha itens na cobertura deste evento. Volte apos a proxima coleta.</p>
+      )
+    }
+  </article>
+</Base>

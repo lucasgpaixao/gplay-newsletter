@@ -2,7 +2,8 @@
 import Base from "../layouts/Base.astro";
 import EventoCard from "../components/EventoCard.astro";
 import CardNoticia from "../components/CardNoticia.astro";
-import { eventosOrdenados, noticiasPublicadas, noticiasDoEvento, proximosEventos } from "../lib/conteudo";
+import { eventosOrdenados, noticiasPublicadas, proximosEventos } from "../lib/conteudo";
+import { noticiasDoEvento } from "../lib/eventos";
 
 const noticias = await noticiasPublicadas();
 const proximos = await proximosEventos();
@@ -22,7 +23,7 @@ const passados = todos.filter((e) => {
       const rel = noticiasDoEvento(e, noticias).slice(0, 3);
       return (
         <div>
-          <EventoCard entry={e} nivelTitulo={2} />
+          <EventoCard entry={e} nivelTitulo={2} linkPagina />
           {rel.length > 0 && (
             <div class="grid grid--3" style="margin-top:14px">
               {rel.map((n) => <CardNoticia entry={n} />)}

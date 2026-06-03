@@ -1,0 +1,78 @@
+name: Coletar (acelerada — evento ao vivo)
+
+# A cada 20 min, coleta somente se houver evento em foco entre inicio e fim.
+# Compartilha fila de commit com o workflow horario para evitar pushes simultaneos.
+
+on:
+  schedule:
+    - cron: "*/20 * * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: coletar
+  cancel-in-progress: false
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    outputs:
+      run: ${{ steps.check.outputs.run }}
+      slug: ${{ steps.check.outputs.slug }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Instalar dependencias (gate)
+        run: npm ci
+      - name: Verificar evento em foco ao vivo
+        id: check
+        run: |
+          set +e
+          OUT=$(npx tsx scripts/deve-coletar-acelerada.ts 2>&1)
+          CODE=$?
+          echo "$OUT"
+          if [ "$CODE" -eq 0 ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+            echo "slug=$(echo "$OUT" | sed -n 's/^Coleta acelerada: //p')" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  coletar:
+    needs: gate
+    if: needs.gate.outputs.run == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Instalar dependencias
+        run: |
+          npm config set fetch-retries 5
+          npm config set fetch-retry-mintimeout 20000
+          npm config set fetch-retry-maxtimeout 120000
+          for i in 1 2 3; do
+            npm ci && break
+            sleep 15
+          done
+      - name: Coletar
+        run: npm run coletar
+      - name: Commitar mudancas
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/content/noticias src/content/videos
+          if git diff --staged --quiet; then
+            echo "Sem novidades nesta rodada (acelerada)."
+          else
+            EVENTO="${{ needs.gate.outputs.slug }}"
+            git commit -m "chore: coleta acelerada (${EVENTO}, $(date -u +'%Y-%m-%d %H:%M UTC'))"
+            git push
+          fi

@@ -6,7 +6,7 @@ inicio: 2026-06-02T18:00:00-03:00
 fim: 2026-06-02T19:30:00-03:00
 confirmado: true
 link: https://www.playstation.com/pt-br/
-destaque: true
+destaque: false
 keywords:
   - state of play
   - playstation
