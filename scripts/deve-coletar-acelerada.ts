@@ -38,7 +38,6 @@ function carregarEventos(): EventoDados[] {
     if (!inicio || Number.isNaN(inicio.getTime())) continue;
     lista.push({
       slug: basename(arq, ".md"),
-      destaque: fm.destaque === "true",
       inicio,
       fim: fm.fim ? new Date(fm.fim) : undefined,
     });

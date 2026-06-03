@@ -2,7 +2,6 @@
 
 export interface EventoDados {
   slug: string;
-  destaque: boolean;
   inicio: Date;
   fim?: Date;
 }
@@ -27,8 +26,9 @@ export function eventoAoVivoDados(
   return agora >= ini && agora <= fim;
 }
 
+/** Próximo evento na fila: não encerrado, menor data de início. */
 export function escolherEventoEmFoco(eventos: EventoDados[], agora = Date.now()): EventoDados | null {
-  const candidatos = eventos.filter((e) => e.destaque && !eventoEncerradoDados(e, agora));
+  const candidatos = eventos.filter((e) => !eventoEncerradoDados(e, agora));
   if (!candidatos.length) return null;
   candidatos.sort((a, b) => a.inicio.getTime() - b.inicio.getTime());
   return candidatos[0];

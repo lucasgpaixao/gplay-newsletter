@@ -50,6 +50,7 @@ const eventos = defineCollection({
     confirmado: z.boolean().default(true),
     link: z.string().url().optional(),
     keywords: z.array(z.string()).default([]),
+    /** Legado; não afeta evento em foco (escolha automática por início). */
     destaque: z.boolean().default(false),
   }),
 });

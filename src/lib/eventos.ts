@@ -20,7 +20,6 @@ export type EventoEntry = CollectionEntry<"eventos">;
 function dadosDe(entry: EventoEntry): EventoDados {
   return {
     slug: entry.slug,
-    destaque: entry.data.destaque,
     inicio: entry.data.inicio,
     fim: entry.data.fim,
   };
@@ -99,7 +98,7 @@ export function ultimaColetaCobertura(
   return max ? new Date(max) : null;
 }
 
-/** Marcação manual + desempate pelo início mais próximo (menor data de início entre candidatos). */
+/** Próximo evento não encerrado (menor início entre os candidatos). */
 export async function eventoEmFoco(): Promise<EventoEntry | null> {
   const agora = Date.now();
   const todos = await getCollection("eventos");

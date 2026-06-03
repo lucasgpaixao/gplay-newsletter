@@ -6,7 +6,7 @@ inicio: 2026-06-07T14:00:00-03:00
 fim: 2026-06-07T15:30:00-03:00
 confirmado: true
 link: https://www.xbox.com/pt-BR/
-destaque: true
+destaque: false
 keywords:
   - xbox
   - xbox games showcase
