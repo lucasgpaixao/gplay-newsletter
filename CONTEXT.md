@@ -25,7 +25,7 @@ Canal configurado que alimenta a coleta; cada canal declara exatamente uma categ
 _Evit_: canal “global” sem tema; misturar RSS de notícia com canal de vídeo no mesmo registro.
 
 **Coleta**:
-Rotina única (`coletar`) que atualiza notícias e vídeos na mesma execução e cadência (ex.: a cada seis horas).
+Rotina única (`coletar`) que atualiza notícias e vídeos na mesma execução e cadência (ex.: a cada uma hora).
 _Evit_: pipeline só de vídeo desacoplado da coleta de notícias no agendamento.
 
 **Categoria YouTube**:

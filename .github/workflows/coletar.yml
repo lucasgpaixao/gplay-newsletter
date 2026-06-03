@@ -5,7 +5,7 @@ name: Coletar noticias
 
 on:
   schedule:
-    - cron: "0 */6 * * *" # a cada 6 horas (UTC)
+    - cron: "0 * * * *" # a cada 1 hora (UTC)
   workflow_dispatch: {} # permite rodar manualmente pela aba Actions
 
 permissions:

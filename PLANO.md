@@ -17,7 +17,7 @@ Jornal digital em PT-BR agregando notícias de **Jogos, Futebol, Tecnologia, IA 
 | Tradução | Removida — o conteúdo é exibido no idioma original do feed |
 | Gerador do site | Astro (content collections) |
 | Eventos | Notas curadas manualmente com countdown + agregação de notícias por `keywords` |
-| Coleta | `npm run coletar` manual + GitHub Actions agendada (a cada 6h) |
+| Coleta | `npm run coletar` manual + GitHub Actions agendada (a cada 1h) |
 | Deploy | Vercel (republica a cada push) |
 | Imagens | Hotlink da thumbnail do feed + placeholder colorido por categoria |
 | Ciclo de vida | Dedupe por `guid`/link + retenção de ~30 dias |
