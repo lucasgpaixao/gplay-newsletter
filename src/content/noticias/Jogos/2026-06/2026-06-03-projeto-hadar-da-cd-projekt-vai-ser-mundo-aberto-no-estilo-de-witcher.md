@@ -7,7 +7,7 @@ link: "https://www.adrenaline.com.br/games/projeto-hadar-da-cd-projekt-vai-ser-m
 imagem: "https://www.adrenaline.com.br/wp-content/uploads/2026/06/Projeto-Hadar-CD-Projekt-RED-640x400.jpeg"
 autor: "Felipe Gugelmin"
 publicado: "2026-06-03T19:27:59.000Z"
-coletado: "2026-06-03T20:00:35.362Z"
+coletado: "2026-06-03T20:14:10.241Z"
 guid: "https://www.adrenaline.com.br/?p=667579"
 ---
 

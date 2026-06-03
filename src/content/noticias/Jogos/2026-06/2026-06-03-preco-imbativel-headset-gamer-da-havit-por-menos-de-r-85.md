@@ -7,7 +7,7 @@ link: "https://br.ign.com/descontos/153524/preco-imbativel-headset-gamer-da-havi
 imagem: "https://sm.ign.com/ign_br/screenshot/default/havit-capa_vs39.jpg"
 autor: "Igor Dantas"
 publicado: "2026-06-03T16:29:00.000Z"
-coletado: "2026-06-03T20:00:31.784Z"
+coletado: "2026-06-03T20:14:09.972Z"
 guid: "https://br.ign.com/descontos/153524/preco-imbativel-headset-gamer-da-havit-por-menos-de-r-85"
 ---
 

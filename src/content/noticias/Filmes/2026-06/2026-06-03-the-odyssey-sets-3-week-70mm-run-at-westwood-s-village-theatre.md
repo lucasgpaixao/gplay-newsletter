@@ -7,7 +7,7 @@ link: "https://variety.com/2026/film/news/the-odyssey-70mm-westwood-village-thea
 imagem: "https://variety.com/wp-content/uploads/2026/03/VARIETY-SIZING-60.png"
 autor: "Pat Saperstein"
 publicado: "2026-06-03T18:00:00.000Z"
-coletado: "2026-06-03T20:00:44.672Z"
+coletado: "2026-06-03T20:14:31.713Z"
 guid: "https://variety.com/?p=1236765198"
 ---
 

@@ -7,7 +7,7 @@ link: "https://www.gazetaesportiva.com/futebol/futebol-internacional/veja-galeri
 imagem: "https://static.gazetaesportiva.com/uploads/2026/06/AFP__20260603__B4WX2G7__v1__MidRes__FblDenCodFriendlyWc2026.webp"
 autor: "Andre Henrique Rodrigues Raucci"
 publicado: "2026-06-03T19:38:20.000Z"
-coletado: "2026-06-03T20:00:38.263Z"
+coletado: "2026-06-03T20:14:15.012Z"
 guid: "https://www.gazetaesportiva.com/?p=3798124"
 ---
 

@@ -7,7 +7,7 @@ link: "https://trivela.com.br/alemanha/bayern-de-munique-interesse-saibari-marro
 imagem: "https://trivela.com.br/thumbor/sqUuPbQhTJ_sYJSjeul5Pbj_5Qw=/1775x1000/smart/filters:format(webp)/https%3A%2F%2Fmedia.trivela.com.br%2Fmain%2F2026%2F04%2Fvincent-kompany-bayern-scaled-e1775763013719.jpg"
 autor: "Gabriel Mota"
 publicado: "2026-06-03T19:00:00.000Z"
-coletado: "2026-06-03T20:00:39.400Z"
+coletado: "2026-06-03T20:14:16.861Z"
 guid: "https://trivela.com.br/alemanha/bayern-de-munique-interesse-saibari-marrocos-brasil-copa/"
 ---
 

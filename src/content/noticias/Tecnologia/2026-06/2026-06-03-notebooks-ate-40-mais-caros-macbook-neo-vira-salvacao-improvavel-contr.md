@@ -7,7 +7,7 @@ link: "https://canaltech.com.br/notebook/notebooks-ate-40-mais-caros-macbook-neo
 imagem: "https://t.ctcdn.com.br/dNWx15Wk2eODBIvBWNdTLHKD_3c=/700x394/smart/i1131939.png"
 autor: "Jones Oliveira"
 publicado: "2026-06-03T19:35:00.000Z"
-coletado: "2026-06-03T20:00:42.579Z"
+coletado: "2026-06-03T20:14:21.669Z"
 guid: "https://canaltech.com.br/notebook/notebooks-ate-40-mais-caros-macbook-neo-vira-salvacao-improvavel-contra-crise/"
 ---
 

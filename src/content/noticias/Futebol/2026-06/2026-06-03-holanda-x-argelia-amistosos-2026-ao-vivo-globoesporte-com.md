@@ -4,8 +4,8 @@ resumo: "Amistosos 2026 no globoesporte.com - acompanhe tudo sobre Holanda x Arg
 categoria: "Futebol"
 fonte: "ge.globo"
 link: "https://ge.globo.com/futebol/copa-do-mundo/jogo/03-06-2026/holanda-argelia.ghtml"
-publicado: "2026-06-03T19:59:10.000Z"
-coletado: "2026-06-03T20:00:38.062Z"
+publicado: "2026-06-03T20:05:12.000Z"
+coletado: "2026-06-03T20:14:13.572Z"
 guid: "https://ge.globo.com/futebol/copa-do-mundo/jogo/03-06-2026/holanda-argelia.ghtml"
 ---
 

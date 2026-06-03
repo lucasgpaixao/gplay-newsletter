@@ -7,7 +7,7 @@ link: "https://canaltech.com.br/entretenimento/mortal-kombat-2-ja-tem-data-certa
 imagem: "https://t.ctcdn.com.br/ExYPOoy2utDZjzhqUoUSv6VlgKs=/700x394/smart/i1131839.png"
 autor: "Jaqueline Sousa"
 publicado: "2026-06-03T19:00:00.000Z"
-coletado: "2026-06-03T20:00:42.580Z"
+coletado: "2026-06-03T20:14:21.670Z"
 guid: "https://canaltech.com.br/entretenimento/mortal-kombat-2-ja-tem-data-certa-para-chegar-ao-streaming/"
 ---
 

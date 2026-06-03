@@ -7,7 +7,7 @@ link: "https://olhardigital.com.br/2026/06/03/medicina-e-saude/agua-crystal-saib
 imagem: "https://olhardigital.com.br/wp-content/uploads/2026/05/Pseudomonas-aeruginosa-1024x768.jpg"
 autor: "Rodrigo Mozelli"
 publicado: "2026-06-03T19:18:34.000Z"
-coletado: "2026-06-03T20:00:40.914Z"
+coletado: "2026-06-03T20:14:19.886Z"
 guid: "https://olhardigital.com.br/?p=1337685"
 ---
 

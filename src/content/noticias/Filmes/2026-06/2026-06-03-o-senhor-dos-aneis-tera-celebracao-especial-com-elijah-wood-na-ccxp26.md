@@ -7,7 +7,7 @@ link: "https://www.legiaodosherois.com.br/2026/o-senhor-dos-aneis-tera-celebraca
 imagem: "https://johto.legiaodosherois.com.br/wp-content/uploads/2026/06/legiao_fZndMsqboY1m.jpg"
 autor: "Equipe Legião dos Heróis"
 publicado: "2026-06-03T14:33:25.000Z"
-coletado: "2026-06-03T20:00:44.489Z"
+coletado: "2026-06-03T20:14:29.077Z"
 guid: "https://www.legiaodosherois.com.br/?p=902726"
 ---
 

@@ -7,7 +7,7 @@ link: "https://www.gazetaesportiva.com/todas-as-noticias/marquinhos-detalha-abra
 imagem: "https://static.gazetaesportiva.com/uploads/2026/06/Marquinhos-detalha.webp"
 autor: "Alessandro Ribeiro Ferreira Ramos"
 publicado: "2026-06-03T19:22:33.000Z"
-coletado: "2026-06-03T20:00:38.263Z"
+coletado: "2026-06-03T20:14:15.012Z"
 guid: "https://www.gazetaesportiva.com/?p=3798123"
 ---
 

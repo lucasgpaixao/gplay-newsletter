@@ -7,7 +7,7 @@ link: "https://canaltech.com.br/produtos/camera-de-seguranca-do-google-agora-rec
 imagem: "https://t.ctcdn.com.br/otJgustKZB-FXDLRBiRAqaoDxT4=/700x394/smart/i1131931.png"
 autor: "Bruno Bertonzin"
 publicado: "2026-06-03T18:44:48.000Z"
-coletado: "2026-06-03T20:00:42.580Z"
+coletado: "2026-06-03T20:14:21.670Z"
 guid: "https://canaltech.com.br/produtos/camera-de-seguranca-do-google-agora-reconhece-gatos-e-caes-pelo-nome/"
 ---
 

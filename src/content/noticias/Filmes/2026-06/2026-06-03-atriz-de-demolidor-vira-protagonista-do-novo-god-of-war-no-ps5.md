@@ -7,7 +7,7 @@ link: "https://www.legiaodosherois.com.br/2026/atriz-de-demolidor-vira-protagoni
 imagem: "https://johto.legiaodosherois.com.br/wp-content/uploads/2026/06/legiao_MJSZI5nKxPBt.jpg"
 autor: "Equipe Legião dos Heróis"
 publicado: "2026-06-03T16:24:22.000Z"
-coletado: "2026-06-03T20:00:44.488Z"
+coletado: "2026-06-03T20:14:29.077Z"
 guid: "https://www.legiaodosherois.com.br/?p=902733"
 ---
 

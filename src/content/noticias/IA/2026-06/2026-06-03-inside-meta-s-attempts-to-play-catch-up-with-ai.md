@@ -7,7 +7,7 @@ link: "https://arstechnica.com/ai/2026/06/inside-metas-attempts-to-play-catch-up
 imagem: "https://cdn.arstechnica.net/wp-content/uploads/2026/06/bluealexandr-1152x648.jpg"
 autor: "Hannah Murphy, Financial Times"
 publicado: "2026-06-03T13:35:58.000Z"
-coletado: "2026-06-03T20:00:43.542Z"
+coletado: "2026-06-03T20:14:27.576Z"
 guid: "https://arstechnica.com/ai/2026/06/inside-metas-attempts-to-play-catch-up-with-ai/"
 ---
 

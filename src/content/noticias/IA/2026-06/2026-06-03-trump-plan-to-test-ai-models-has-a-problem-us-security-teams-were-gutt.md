@@ -7,7 +7,7 @@ link: "https://arstechnica.com/tech-policy/2026/06/trumps-ai-executive-order-may
 imagem: "https://cdn.arstechnica.net/wp-content/uploads/2026/06/trump-terminator-monkey-cymbals-1152x648.jpg"
 autor: "Ashley Belanger"
 publicado: "2026-06-03T18:11:15.000Z"
-coletado: "2026-06-03T20:00:43.542Z"
+coletado: "2026-06-03T20:14:27.576Z"
 guid: "https://arstechnica.com/tech-policy/2026/06/trumps-ai-executive-order-may-not-prevent-dangerous-deployments/"
 ---
 

@@ -7,7 +7,7 @@ link: "https://arstechnica.com/google/2026/06/googles-new-gemma-4-open-ai-model-
 imagem: "https://cdn.arstechnica.net/wp-content/uploads/2025/11/Gemma-social-share.width-1300-1152x648.jpg"
 autor: "Ryan Whitwam"
 publicado: "2026-06-03T19:10:03.000Z"
-coletado: "2026-06-03T20:00:43.542Z"
+coletado: "2026-06-03T20:14:27.576Z"
 guid: "https://arstechnica.com/google/2026/06/googles-new-gemma-4-open-ai-model-is-sized-for-your-laptop/"
 ---
 

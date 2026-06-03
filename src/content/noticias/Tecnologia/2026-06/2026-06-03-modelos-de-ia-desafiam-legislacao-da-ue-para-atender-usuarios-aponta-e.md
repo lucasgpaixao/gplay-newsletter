@@ -7,7 +7,7 @@ link: "https://olhardigital.com.br/2026/06/03/inteligencia-artificial/modelos-de
 imagem: "https://olhardigital.com.br/wp-content/uploads/2025/11/Bandeira-Uniao-Europeia-1024x576.jpg"
 autor: "Valdir Antonelli"
 publicado: "2026-06-03T19:11:07.000Z"
-coletado: "2026-06-03T20:00:40.915Z"
+coletado: "2026-06-03T20:14:19.886Z"
 guid: "https://olhardigital.com.br/?p=1337702"
 ---
 

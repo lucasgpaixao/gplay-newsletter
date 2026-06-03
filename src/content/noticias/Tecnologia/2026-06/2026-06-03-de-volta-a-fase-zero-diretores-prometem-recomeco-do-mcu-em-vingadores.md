@@ -7,7 +7,7 @@ link: "https://canaltech.com.br/entretenimento/de-volta-a-fase-zero-diretores-pr
 imagem: "https://t.ctcdn.com.br/HTnR_mmyPpalkgYxelvcNhiYgRw=/700x394/smart/i1009839.jpeg"
 autor: "Jaqueline Sousa"
 publicado: "2026-06-03T20:00:00.000Z"
-coletado: "2026-06-03T20:00:42.579Z"
+coletado: "2026-06-03T20:14:21.669Z"
 guid: "https://canaltech.com.br/entretenimento/de-volta-a-fase-zero-diretores-prometem-recomeco-do-mcu-em-vingadores-doomsday/"
 ---
 

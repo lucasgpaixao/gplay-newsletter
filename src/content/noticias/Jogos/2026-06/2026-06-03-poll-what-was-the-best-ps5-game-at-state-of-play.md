@@ -6,7 +6,7 @@ fonte: "Push Square"
 link: "https://www.pushsquare.com/features/poll-what-was-the-best-ps5-game-at-state-of-play"
 imagem: "https://images.pushsquare.com/9dff988adba00/large.jpg"
 publicado: "2026-06-03T18:00:00.000Z"
-coletado: "2026-06-03T20:00:35.862Z"
+coletado: "2026-06-03T20:14:11.880Z"
 guid: "https://www.pushsquare.com/#article-201992"
 ---
 

@@ -6,7 +6,7 @@ fonte: "Push Square"
 link: "https://www.pushsquare.com/news/2026/06/yare-yare-daze-more-jojos-bizarre-adventure-coming-to-ps5"
 imagem: "https://images.pushsquare.com/428cd4e41810a/large.jpg"
 publicado: "2026-06-03T17:45:00.000Z"
-coletado: "2026-06-03T20:00:35.862Z"
+coletado: "2026-06-03T20:14:11.880Z"
 guid: "https://www.pushsquare.com/#article-202020"
 ---
 

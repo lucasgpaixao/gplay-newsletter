@@ -7,7 +7,7 @@ link: "https://variety.com/2026/artisans/news/casting-society-video-game-casting
 imagem: "https://variety.com/wp-content/uploads/2026/06/Untitled-design.png"
 autor: "Payton Turkeltaub"
 publicado: "2026-06-03T18:05:00.000Z"
-coletado: "2026-06-03T20:00:44.671Z"
+coletado: "2026-06-03T20:14:31.713Z"
 guid: "https://variety.com/?p=1236765961"
 ---
 

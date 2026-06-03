@@ -7,7 +7,7 @@ link: "https://br.ign.com/god-of-war-laufey/153523/o-fato-de-god-of-war-laufey-n
 imagem: "https://sm.ign.com/ign_br/screenshot/default/blob_vcqe.jpg"
 autor: "Matheus Bianezzi"
 publicado: "2026-06-03T16:21:35.000Z"
-coletado: "2026-06-03T20:00:31.784Z"
+coletado: "2026-06-03T20:14:09.972Z"
 guid: "https://br.ign.com/god-of-war-laufey/153523/o-fato-de-god-of-war-laufey-nao-ter-uma-data-de-lancamento-nao-e-necessariamente-uma-ma-noticia-e-um"
 ---
 

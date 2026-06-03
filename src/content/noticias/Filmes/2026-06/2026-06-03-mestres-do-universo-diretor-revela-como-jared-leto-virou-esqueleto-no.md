@@ -7,7 +7,7 @@ link: "https://www.legiaodosherois.com.br/2026/mestres-do-universo-revela-como-j
 imagem: "https://johto.legiaodosherois.com.br/wp-content/uploads/2026/06/legiao_rokFjl6z5y0H.webp"
 autor: "Equipe Legião dos Heróis"
 publicado: "2026-06-03T13:25:19.000Z"
-coletado: "2026-06-03T20:00:44.489Z"
+coletado: "2026-06-03T20:14:29.077Z"
 guid: "https://www.legiaodosherois.com.br/?p=902446"
 ---
 

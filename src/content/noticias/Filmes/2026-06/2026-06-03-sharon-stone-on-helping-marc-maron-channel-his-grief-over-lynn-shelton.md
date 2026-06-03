@@ -7,7 +7,7 @@ link: "https://variety.com/2026/film/news/sharon-stone-marc-maron-lynn-shelton-b
 imagem: "https://variety.com/wp-content/uploads/2025/08/GettyImages-2228956003-1.jpg"
 autor: "Varietybrentlang"
 publicado: "2026-06-03T18:10:25.000Z"
-coletado: "2026-06-03T20:00:44.671Z"
+coletado: "2026-06-03T20:14:31.712Z"
 guid: "https://variety.com/?p=1236765768"
 ---
 

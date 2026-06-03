@@ -7,7 +7,7 @@ link: "https://www.adrenaline.com.br/games/phantom-blade-0-recebe-novo-trailer-m
 imagem: "https://www.adrenaline.com.br/wp-content/uploads/2026/06/phantom-blade-0-novo-trailer-adiado-640x400.jpg"
 autor: "João Gabriel"
 publicado: "2026-06-03T16:34:54.000Z"
-coletado: "2026-06-03T20:00:35.363Z"
+coletado: "2026-06-03T20:14:10.241Z"
 guid: "https://www.adrenaline.com.br/?p=667538"
 ---
 

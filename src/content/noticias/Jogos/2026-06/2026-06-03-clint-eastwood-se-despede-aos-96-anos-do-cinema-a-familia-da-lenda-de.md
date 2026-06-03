@@ -7,7 +7,7 @@ link: "https://br.ign.com/cinema-tv/153521/clint-eastwood-se-despede-aos-96-anos
 imagem: "https://sm.ign.com/ign_br/screenshot/default/blob_4q6k.jpg"
 autor: "Matheus Bianezzi"
 publicado: "2026-06-03T15:59:38.000Z"
-coletado: "2026-06-03T20:00:31.785Z"
+coletado: "2026-06-03T20:14:09.972Z"
 guid: "https://br.ign.com/cinema-tv/153521/clint-eastwood-se-despede-aos-96-anos-do-cinema-a-familia-da-lenda-de-hollywood-anuncia-sua-aposenta"
 ---
 

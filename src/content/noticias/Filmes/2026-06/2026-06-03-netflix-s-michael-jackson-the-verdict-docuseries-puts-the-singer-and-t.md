@@ -7,7 +7,7 @@ link: "https://variety.com/2026/tv/reviews/michael-jackson-the-verdict-review-ne
 imagem: "https://variety.com/wp-content/uploads/2026/06/EN-US_MJOT_Main_Vertical_4x5_RGB_PREDATE.jpg"
 autor: "Aramide Tinubu"
 publicado: "2026-06-03T18:00:52.000Z"
-coletado: "2026-06-03T20:00:44.672Z"
+coletado: "2026-06-03T20:14:31.713Z"
 guid: "https://variety.com/?p=1236765646"
 ---
 

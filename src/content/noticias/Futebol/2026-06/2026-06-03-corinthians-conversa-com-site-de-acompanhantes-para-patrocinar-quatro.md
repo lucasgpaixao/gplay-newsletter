@@ -7,7 +7,7 @@ link: "https://www.gazetaesportiva.com/times/corinthians/corinthians-conversa-co
 imagem: "https://static.gazetaesportiva.com/uploads/2025/09/54277855463_401f113017_o.webp"
 autor: "Thais Bueno Cirino"
 publicado: "2026-06-03T19:57:28.000Z"
-coletado: "2026-06-03T20:00:38.261Z"
+coletado: "2026-06-03T20:14:15.012Z"
 guid: "https://www.gazetaesportiva.com/?p=3798116"
 ---
 

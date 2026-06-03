@@ -6,7 +6,7 @@ fonte: "Push Square"
 link: "https://www.pushsquare.com/features/reaction-leaks-robbed-state-of-play-of-its-biggest-surprise-but-show-still-spotlighted-many-ps5-games-ill-buy"
 imagem: "https://images.pushsquare.com/b717cad27b6c6/large.jpg"
 publicado: "2026-06-03T19:00:00.000Z"
-coletado: "2026-06-03T20:00:35.862Z"
+coletado: "2026-06-03T20:14:11.880Z"
 guid: "https://www.pushsquare.com/#article-201981"
 ---
 

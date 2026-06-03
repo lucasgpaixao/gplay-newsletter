@@ -7,7 +7,7 @@ link: "https://www.gazetaesportiva.com/futebol-feminino/jogadora-da-selecao-de-f
 imagem: "https://static.gazetaesportiva.com/uploads/2026/06/AFP__20260216__97QQ7GX__v1__HighRes__PalestinianIsraelConflictWestBank-2048x1365-1.webp"
 autor: "Pedro Castorino Grothe Machado"
 publicado: "2026-06-03T19:01:44.000Z"
-coletado: "2026-06-03T20:00:38.264Z"
+coletado: "2026-06-03T20:14:15.012Z"
 guid: "https://www.gazetaesportiva.com/?p=3798096"
 ---
 

@@ -7,7 +7,7 @@ link: "https://olhardigital.com.br/2026/06/03/ciencia-e-espaco/sol-registra-tres
 imagem: "https://img.odcdn.com.br/wp-content/uploads/2026/06/image.png"
 autor: "Lucas Soares"
 publicado: "2026-06-03T18:41:38.000Z"
-coletado: "2026-06-03T20:00:40.915Z"
+coletado: "2026-06-03T20:14:19.887Z"
 guid: "https://olhardigital.com.br/?p=1337697"
 ---
 

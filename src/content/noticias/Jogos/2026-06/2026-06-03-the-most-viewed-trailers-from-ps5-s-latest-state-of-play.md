@@ -6,7 +6,7 @@ fonte: "Push Square"
 link: "https://www.pushsquare.com/news/2026/06/the-most-viewed-trailers-from-ps5s-latest-state-of-play"
 imagem: "https://images.pushsquare.com/973f0cbbf50ec/large.jpg"
 publicado: "2026-06-03T16:30:00.000Z"
-coletado: "2026-06-03T20:00:35.863Z"
+coletado: "2026-06-03T20:14:11.880Z"
 guid: "https://www.pushsquare.com/#article-202018"
 ---
 

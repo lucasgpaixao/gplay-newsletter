@@ -7,7 +7,7 @@ link: "https://www.legiaodosherois.com.br/2026/the-witcher-4-tera-equipe-muito-m
 imagem: "https://johto.legiaodosherois.com.br/wp-content/uploads/2026/06/legiao_lBLnA2NfFpIM.avif"
 autor: "Equipe Legião dos Heróis"
 publicado: "2026-06-02T22:36:47.000Z"
-coletado: "2026-06-03T00:14:49.330Z"
+coletado: "2026-06-03T20:14:29.077Z"
 guid: "https://www.legiaodosherois.com.br/?p=902090"
 ---
 

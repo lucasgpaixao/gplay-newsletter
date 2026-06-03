@@ -7,7 +7,7 @@ link: "https://www.gazetaesportiva.com/times/uruguai/uruguai-confirma-lesao-de-a
 imagem: "https://static.gazetaesportiva.com/uploads/2026/03/AFP__20260331__A6DA4H2__v1__HighRes__FblWc2026FriendlyAlgUru.webp"
 autor: "Henrique Alves Zaneti"
 publicado: "2026-06-03T19:16:18.000Z"
-coletado: "2026-06-03T20:00:38.263Z"
+coletado: "2026-06-03T20:14:15.012Z"
 guid: "https://www.gazetaesportiva.com/?p=3798107"
 ---
 

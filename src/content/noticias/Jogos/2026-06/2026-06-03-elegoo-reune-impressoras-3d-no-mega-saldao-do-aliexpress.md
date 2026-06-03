@@ -7,7 +7,7 @@ link: "https://br.ign.com/descontos/153525/elegoo-reune-impressoras-3d-em-promoc
 imagem: "https://sm.ign.com/ign_br/screenshot/default/destiny-infinity-7_rbf8.jpg"
 autor: "Rebeca Pinho"
 publicado: "2026-06-03T17:27:37.000Z"
-coletado: "2026-06-03T20:00:31.784Z"
+coletado: "2026-06-03T20:14:09.971Z"
 guid: "https://br.ign.com/descontos/153525/elegoo-reune-impressoras-3d-em-promocao-no-saldao-do-aliexpress"
 ---
 
