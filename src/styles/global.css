@@ -146,7 +146,8 @@ p.masthead__title {
   gap: 8px;
   align-items: center;
   flex-wrap: nowrap;
-  padding: 8px 0;
+  /* Só vertical: .container já define padding-inline (20px). */
+  padding-block: 8px;
   position: relative;
 }
 .nav__toggle {
@@ -155,8 +156,11 @@ p.masthead__title {
   justify-content: center;
   width: 42px;
   height: 42px;
+  min-width: 42px;
+  min-height: 42px;
   padding: 0;
   flex-shrink: 0;
+  margin-inline-end: 8px;
 }
 .nav__toggle-bars {
   display: block;
@@ -239,6 +243,13 @@ p.masthead__title {
 }
 .nav__tema {
   flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 42px;
+  min-height: 42px;
+  margin-inline-start: 10px;
+  padding: 0;
 }
 body.nav-aberta {
   overflow: hidden;
@@ -249,8 +260,8 @@ body.nav-aberta {
     display: none;
   }
   .nav__inner {
-    gap: 4px;
-    padding: 6px 0;
+    gap: 6px;
+    padding-block: 6px;
   }
   .nav__menu {
     display: flex;
@@ -269,7 +280,7 @@ body.nav-aberta {
     align-items: center;
     flex: 1;
     min-width: 0;
-    padding: 0;
+    padding: 0 4px 0 0;
     gap: 0;
   }
   .nav a {
@@ -659,6 +670,9 @@ h3.evento__nome {
 }
 .evento-pagina__banner--arquivo {
   color: var(--ink-soft);
+}
+.evento-pagina > .evento-pagina__banner {
+  margin-top: 24px;
 }
 
 /* ---------- Artigo ---------- */
