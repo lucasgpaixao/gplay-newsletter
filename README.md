@@ -35,7 +35,7 @@ O limite está em `src/lib/noticias-limites.ts` (`MAX_NOTICIAS_POR_CATEGORIA = 2
 
 ## Fontes
 
-Edite `src/config/fontes.ts` para adicionar/remover feeds RSS. Cada fonte tem `nome`, `url`, `idioma` (`pt`/`en`, apenas informativo) e `categoria`.
+Edite `src/config/fontes.ts` para adicionar/remover feeds RSS (32 fontes no total). Cada fonte tem `nome`, `url`, `idioma` (`pt`/`en`, apenas informativo) e `categoria`.
 
 ## Vídeos (YouTube)
 

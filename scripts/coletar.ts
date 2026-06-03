@@ -16,6 +16,7 @@ import Parser from "rss-parser";
 import { FONTES } from "../src/config/fontes.ts";
 import { MAX_NOTICIAS_POR_CATEGORIA } from "../src/lib/noticias-limites.ts";
 import { slugify, hashCurto } from "../src/lib/slug.ts";
+import { ehNoticiaCupomOuCodigoPromo } from "../src/lib/filtro-noticias.ts";
 import { extrairImagem, limparHtml, resumir } from "../src/lib/texto.ts";
 import { MAX_VIDEOS_POR_CATEGORIA_RELACIONADA } from "../src/lib/videos-limites.ts";
 import { coletarVideos } from "./coletar-videos.ts";
@@ -160,6 +161,29 @@ function aplicarRetencao(): number {
   return removidos;
 }
 
+function removerNoticiasCupomNoAcervo(): number {
+  let removidos = 0;
+  for (const arq of listarArquivosMd(DIR_NOTICIAS)) {
+    const raw = readFileSync(arq, "utf8");
+    const tituloRaw = raw.match(/^titulo:\s*(.+)$/m)?.[1];
+    const linkRaw = raw.match(/^link:\s*(.+)$/m)?.[1];
+    if (!tituloRaw) continue;
+    let tituloLimpo = tituloRaw;
+    let linkLimpo = linkRaw;
+    try {
+      tituloLimpo = JSON.parse(tituloRaw) as string;
+      if (linkRaw) linkLimpo = JSON.parse(linkRaw) as string;
+    } catch {
+      tituloLimpo = tituloRaw.replace(/^"|"$/g, "");
+      linkLimpo = linkRaw?.replace(/^"|"$/g, "");
+    }
+    if (!ehNoticiaCupomOuCodigoPromo({ titulo: tituloLimpo, link: linkLimpo })) continue;
+    rmSync(arq, { force: true });
+    removidos++;
+  }
+  return removidos;
+}
+
 async function main() {
   console.log(`\n=== GPlay Newsletter :: coleta ===`);
   console.log(`Retencao: ${MAX_NOTICIAS_POR_CATEGORIA} noticias por categoria`);
@@ -205,6 +229,8 @@ async function main() {
       const titulo = limparHtml(item.title || "(sem titulo)");
       const resumo = resumir(item.contentSnippet || item.content || item.summary || "");
 
+      if (ehNoticiaCupomOuCodigoPromo({ titulo, link })) continue;
+
       const imagem = extrairImagem(item);
       const autor = limparHtml((item as any).creator || item.author || "");
       const slug = `${aaaaMMDD(publicado)}-${slugify(titulo) || hashCurto(guid)}`;
@@ -236,6 +262,11 @@ async function main() {
       writeFileSync(arquivo, linhas, "utf8");
       novos++;
     }
+  }
+
+  const removidosCupom = removerNoticiasCupomNoAcervo();
+  if (removidosCupom > 0) {
+    console.log(`\nCupons/codigos promocionais removidos do acervo: ${removidosCupom}`);
   }
 
   const removidos = aplicarRetencao();

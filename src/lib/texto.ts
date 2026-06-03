@@ -1,6 +1,25 @@
-export function limparHtml(html: string | undefined): string {
-  if (!html) return "";
-  return html
+function extrairTextoBruto(value: unknown): string {
+  if (value == null || value === "") return "";
+  if (typeof value === "string") return value;
+  if (typeof value === "number" || typeof value === "boolean") return String(value);
+  if (Array.isArray(value)) {
+    return value.map(extrairTextoBruto).filter(Boolean).join(" ");
+  }
+  if (typeof value === "object") {
+    const o = value as Record<string, unknown>;
+    for (const key of ["_", "#", "name", "text", "value", "content"]) {
+      const v = o[key];
+      if (typeof v === "string" && v) return v;
+    }
+    if (typeof o.name === "string") return o.name;
+  }
+  return "";
+}
+
+export function limparHtml(html: string | undefined | unknown): string {
+  const texto = extrairTextoBruto(html);
+  if (!texto) return "";
+  return texto
     .replace(/<[^>]+>/g, " ")
     .replace(/&nbsp;/g, " ")
     .replace(/&amp;/g, "&")
@@ -31,7 +50,7 @@ export function extrairImagem(item: Record<string, any>): string | undefined {
   const media = item["media:content"]?.$?.url || item["media:thumbnail"]?.$?.url;
   if (media && /^https?:\/\//.test(media)) return media;
 
-  const html: string = item["content:encoded"] || item.content || item.summary || "";
+  const html = extrairTextoBruto(item["content:encoded"] || item.content || item.summary || "");
   const m = html.match(RE_IMG);
   if (m && /^https?:\/\//.test(m[1])) return m[1];
 
