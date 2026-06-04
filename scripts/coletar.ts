@@ -19,6 +19,7 @@ import { slugify, hashCurto } from "../src/lib/slug.ts";
 import { ehNoticiaCupomOuCodigoPromo } from "../src/lib/filtro-noticias.ts";
 import { extrairImagem, limparHtml, resumir } from "../src/lib/texto.ts";
 import { MAX_VIDEOS_POR_CATEGORIA_RELACIONADA } from "../src/lib/videos-limites.ts";
+import { limiarPublicadoRetido } from "./acervo-limiar.ts";
 import { coletarVideos } from "./coletar-videos.ts";
 import { MAX_ITENS_POR_FEED, parseFeedUrl } from "./rss-utils.ts";
 
@@ -230,8 +231,17 @@ async function main() {
   mkdirSync(DIR_NOTICIAS, { recursive: true });
 
   const jaExistem = guidsExistentes();
+  const limiarPorCategoria = limiarPublicadoRetido(
+    DIR_NOTICIAS,
+    MAX_NOTICIAS_POR_CATEGORIA,
+    (arq) => {
+      const meta = metaDeArquivo(arq);
+      return meta ? { chave: meta.categoria, publicado: meta.publicado } : null;
+    },
+  );
   const vistosNestaRodada = new Set<string>();
   let novos = 0;
+  let ignoradosPorLimiar = 0;
 
   for (const fonte of FONTES) {
     process.stdout.write(`\n[${fonte.categoria}] ${fonte.nome} ... `);
@@ -258,6 +268,11 @@ async function main() {
       vistosNestaRodada.add(guid);
 
       const publicado = item.isoDate ? new Date(item.isoDate) : new Date();
+      const limiar = limiarPorCategoria.get(fonte.categoria);
+      if (limiar !== undefined && publicado.getTime() < limiar) {
+        ignoradosPorLimiar++;
+        continue;
+      }
 
       const titulo = limparHtml(item.title || "(sem titulo)");
       const resumo = resumir(item.contentSnippet || item.content || item.summary || "");
@@ -303,6 +318,9 @@ async function main() {
   }
 
   const removidos = aplicarRetencao();
+  if (ignoradosPorLimiar > 0) {
+    console.log(`\nItens de feed mais antigos que o acervo cheio (ignorados): ${ignoradosPorLimiar}`);
+  }
 
   console.log(`\n--- Videos YouTube ---`);
   const { novos: novosVideos, removidos: removidosVideos } = await coletarVideos(DIR_VIDEOS);
@@ -313,6 +331,7 @@ async function main() {
     `\n=== Concluido: ${novos} noticias novas, ${removidos} noticias removidas; ` +
       `${novosVideos} videos novos, ${removidosVideos} videos removidos ===\n`,
   );
+  process.exit(0);
 }
 
 main().catch((err) => {

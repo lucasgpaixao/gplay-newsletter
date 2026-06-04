@@ -7,6 +7,7 @@ import { MAX_VIDEOS_POR_CATEGORIA_RELACIONADA } from "../src/lib/videos-limites.
 import { slugify, hashCurto } from "../src/lib/slug.ts";
 import { limparHtml } from "../src/lib/texto.ts";
 import { thumbnailYoutube } from "../src/lib/youtube.ts";
+import { limiarPublicadoRetido } from "./acervo-limiar.ts";
 import { parseFeedUrl } from "./rss-utils.ts";
 
 const parser = new Parser({
@@ -149,6 +150,14 @@ export async function coletarVideos(dirVideos: string): Promise<ResultadoColetaV
   mkdirSync(dirVideos, { recursive: true });
 
   const jaExistem = guidsExistentes(dirVideos);
+  const limiarPorCategoria = limiarPublicadoRetido(
+    dirVideos,
+    MAX_VIDEOS_POR_CATEGORIA_RELACIONADA,
+    (arq) => {
+      const meta = metaDeArquivo(arq, dirVideos);
+      return meta ? { chave: meta.categoriaRelacionada, publicado: meta.publicado } : null;
+    },
+  );
   const vistosNestaRodada = new Set<string>();
   let novos = 0;
 
@@ -183,6 +192,9 @@ export async function coletarVideos(dirVideos: string): Promise<ResultadoColetaV
       vistosNestaRodada.add(guid);
 
       const publicado = item.isoDate ? new Date(item.isoDate) : new Date();
+      const limiar = limiarPorCategoria.get(canal.categoriaRelacionada);
+      if (limiar !== undefined && publicado.getTime() < limiar) continue;
+
       const titulo = limparHtml(item.title || "(sem titulo)");
       const link = (item.link || `https://www.youtube.com/watch?v=${videoId}`).trim();
       const thumbnail = thumbnailYoutube(videoId);
