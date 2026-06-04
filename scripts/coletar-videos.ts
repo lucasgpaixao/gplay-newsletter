@@ -156,14 +156,23 @@ export async function coletarVideos(dirVideos: string): Promise<ResultadoColetaV
     const url = urlFeedCanal(canal.channelId);
     process.stdout.write(`\n[YouTube/${canal.categoriaRelacionada}] ${canal.nome} ... `);
     let feed;
+    let totalNoFeed = 0;
     try {
-      ({ feed } = await parseFeedUrl(parser, url));
+      ({ feed, totalNoFeed } = await parseFeedUrl(
+        parser,
+        url,
+        MAX_VIDEOS_POR_CATEGORIA_RELACIONADA,
+      ));
     } catch (err) {
       console.log(`FALHOU (${(err as Error).message})`);
       continue;
     }
     const itens = feed.items ?? [];
-    console.log(`${itens.length} itens`);
+    const rotulo =
+      totalNoFeed > MAX_VIDEOS_POR_CATEGORIA_RELACIONADA
+        ? `${itens.length} do feed (${totalNoFeed} no feed, teto ${MAX_VIDEOS_POR_CATEGORIA_RELACIONADA})`
+        : `${itens.length} do feed`;
+    console.log(rotulo);
 
     for (const item of itens) {
       const videoId = extrairVideoId(item);

@@ -28,7 +28,6 @@ export const FONTES: Fonte[] = [
   { nome: "Gazeta Esportiva", url: "https://www.gazetaesportiva.com/feed/", idioma: "pt", categoria: "Futebol" },
   { nome: "Trivela", url: "https://trivela.com.br/feed/", idioma: "pt", categoria: "Futebol" },
   { nome: "Folha Esporte", url: "https://feeds.folha.uol.com.br/esporte/rss091.xml", idioma: "pt", categoria: "Futebol" },
-  { nome: "Metropoles Esportes", url: "https://www.metropoles.com/esportes/feed", idioma: "pt", categoria: "Futebol" },
 
   // ---------------- Tecnologia ----------------
   { nome: "Tecmundo", url: "https://rss.tecmundo.com.br/feed", idioma: "pt", categoria: "Tecnologia" },
@@ -37,7 +36,6 @@ export const FONTES: Fonte[] = [
   { nome: "The Verge", url: "https://www.theverge.com/rss/index.xml", idioma: "en", categoria: "Tecnologia" },
   { nome: "Neofeed", url: "https://neofeed.com.br/feed/", idioma: "pt", categoria: "Tecnologia" },
   { nome: "Exame", url: "https://exame.com/feed/", idioma: "pt", categoria: "Tecnologia" },
-  { nome: "Hardware.com.br", url: "https://www.hardware.com.br/rss/", idioma: "pt", categoria: "Tecnologia" },
 
   // ---------------- IA ----------------
   { nome: "VentureBeat AI", url: "https://venturebeat.com/category/ai/feed/", idioma: "en", categoria: "IA" },

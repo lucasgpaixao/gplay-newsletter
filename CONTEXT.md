@@ -64,6 +64,10 @@ _Evit_: artigo, post, vídeo.
 Conteúdo hospedado no YouTube, com identificador do vídeo, canal e metadados próprios; vive na collection `videos`, não em `noticias`.
 _Evit_: notícia com link do YouTube, embed solto.
 
+**Acervo de notícias**:
+No máximo vinte matérias retidas por categoria temática (as mais recentes), somando todos os feeds daquele tema; deduplicação por `guid`.
+_Evit_: vinte notícias por feed ou por veículo; limite global único cortando todas as categorias juntas.
+
 **Acervo de vídeos**:
 No máximo cinco vídeos retidos por categoria relacionada (os mais recentes), somando todos os canais daquele tema; deduplicação por id do vídeo.
 _Evit_: limite global único de vinte; cinco vídeos por canal.

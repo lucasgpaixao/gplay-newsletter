@@ -1,7 +1,9 @@
 import type Parser from "rss-parser";
 
-/** Limite extra por feed; retencao no acervo e bem menor (20/categoria). */
-export const MAX_ITENS_POR_FEED = 50;
+import { MAX_NOTICIAS_POR_CATEGORIA } from "../src/lib/noticias-limites.ts";
+
+/** Máximo de itens lidos por feed RSS (alinhado à retenção por categoria). */
+export const MAX_ITENS_POR_FEED = MAX_NOTICIAS_POR_CATEGORIA;
 
 export const FEED_PARSE_TIMEOUT_MS = 30_000;
 

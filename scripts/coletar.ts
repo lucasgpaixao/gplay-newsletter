@@ -162,6 +162,33 @@ function aplicarRetencao(): number {
   return removidos;
 }
 
+function contarMdPorPastaRaiz(dir: string): Map<string, number> {
+  const contagem = new Map<string, number>();
+  if (!existsSync(dir)) return contagem;
+  for (const entrada of readdirSync(dir, { withFileTypes: true })) {
+    if (!entrada.isDirectory()) continue;
+    const pasta = join(dir, entrada.name);
+    contagem.set(entrada.name, listarArquivosMd(pasta).length);
+  }
+  return contagem;
+}
+
+function logResumoAcervo(): void {
+  console.log("\n--- Acervo após retenção ---");
+  const noticias = contarMdPorPastaRaiz(DIR_NOTICIAS);
+  for (const cat of [...noticias.keys()].sort()) {
+    const n = noticias.get(cat) ?? 0;
+    const ok = n <= MAX_NOTICIAS_POR_CATEGORIA ? "ok" : "EXCEDEU";
+    console.log(`  Notícias/${cat}: ${n}/${MAX_NOTICIAS_POR_CATEGORIA} (${ok})`);
+  }
+  const videos = contarMdPorPastaRaiz(DIR_VIDEOS);
+  for (const cat of [...videos.keys()].sort()) {
+    const n = videos.get(cat) ?? 0;
+    const ok = n <= MAX_VIDEOS_POR_CATEGORIA_RELACIONADA ? "ok" : "EXCEDEU";
+    console.log(`  Vídeos/${cat}: ${n}/${MAX_VIDEOS_POR_CATEGORIA_RELACIONADA} (${ok})`);
+  }
+}
+
 function removerNoticiasCupomNoAcervo(): number {
   let removidos = 0;
   for (const arq of listarArquivosMd(DIR_NOTICIAS)) {
@@ -219,8 +246,8 @@ async function main() {
     const itens = feed.items ?? [];
     const rotulo =
       totalNoFeed > MAX_ITENS_POR_FEED
-        ? `${itens.length} itens (${totalNoFeed} no feed, cap ${MAX_ITENS_POR_FEED})`
-        : `${itens.length} itens`;
+        ? `${itens.length} do feed (${totalNoFeed} no feed, teto ${MAX_ITENS_POR_FEED})`
+        : `${itens.length} do feed`;
     console.log(rotulo);
 
     for (const item of itens) {
@@ -280,8 +307,10 @@ async function main() {
   console.log(`\n--- Videos YouTube ---`);
   const { novos: novosVideos, removidos: removidosVideos } = await coletarVideos(DIR_VIDEOS);
 
+  logResumoAcervo();
+
   console.log(
-    `\n\n=== Concluido: ${novos} noticias novas, ${removidos} noticias removidas; ` +
+    `\n=== Concluido: ${novos} noticias novas, ${removidos} noticias removidas; ` +
       `${novosVideos} videos novos, ${removidosVideos} videos removidos ===\n`,
   );
 }

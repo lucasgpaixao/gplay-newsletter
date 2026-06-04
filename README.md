@@ -31,7 +31,7 @@ npm run preview           # pré-visualiza o build
 
 ## Retenção do acervo
 
-O limite está em `src/lib/noticias-limites.ts` (`MAX_NOTICIAS_POR_CATEGORIA = 20`). O coletor e o build do Astro usam o mesmo valor.
+Limites centralizados: `src/lib/noticias-limites.ts` (**20** notícias por categoria temática) e `src/lib/videos-limites.ts` (**5** vídeos por categoria relacionada, somando todos os canais do tema). O coletor (`scripts/coletar.ts`), a retenção no disco e o build do Astro (`src/lib/conteudo.ts`) usam os mesmos valores.
 
 ## Fontes
 
