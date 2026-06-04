@@ -20,6 +20,7 @@ import { ehNoticiaCupomOuCodigoPromo } from "../src/lib/filtro-noticias.ts";
 import { extrairImagem, limparHtml, resumir } from "../src/lib/texto.ts";
 import { MAX_VIDEOS_POR_CATEGORIA_RELACIONADA } from "../src/lib/videos-limites.ts";
 import { coletarVideos } from "./coletar-videos.ts";
+import { MAX_ITENS_POR_FEED, parseFeedUrl } from "./rss-utils.ts";
 
 // ----- carregar .env (Node 22) -----
 try {
@@ -208,14 +209,19 @@ async function main() {
   for (const fonte of FONTES) {
     process.stdout.write(`\n[${fonte.categoria}] ${fonte.nome} ... `);
     let feed;
+    let totalNoFeed = 0;
     try {
-      feed = await parser.parseURL(fonte.url);
+      ({ feed, totalNoFeed } = await parseFeedUrl(parser, fonte.url));
     } catch (err) {
       console.log(`FALHOU (${(err as Error).message})`);
       continue;
     }
     const itens = feed.items ?? [];
-    console.log(`${itens.length} itens`);
+    const rotulo =
+      totalNoFeed > MAX_ITENS_POR_FEED
+        ? `${itens.length} itens (${totalNoFeed} no feed, cap ${MAX_ITENS_POR_FEED})`
+        : `${itens.length} itens`;
+    console.log(rotulo);
 
     for (const item of itens) {
       const link = (item.link || item.guid || "").trim();

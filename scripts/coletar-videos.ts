@@ -7,6 +7,7 @@ import { MAX_VIDEOS_POR_CATEGORIA_RELACIONADA } from "../src/lib/videos-limites.
 import { slugify, hashCurto } from "../src/lib/slug.ts";
 import { limparHtml } from "../src/lib/texto.ts";
 import { thumbnailYoutube } from "../src/lib/youtube.ts";
+import { parseFeedUrl } from "./rss-utils.ts";
 
 const parser = new Parser({
   timeout: 25000,
@@ -156,7 +157,7 @@ export async function coletarVideos(dirVideos: string): Promise<ResultadoColetaV
     process.stdout.write(`\n[YouTube/${canal.categoriaRelacionada}] ${canal.nome} ... `);
     let feed;
     try {
-      feed = await parser.parseURL(url);
+      ({ feed } = await parseFeedUrl(parser, url));
     } catch (err) {
       console.log(`FALHOU (${(err as Error).message})`);
       continue;

@@ -2,6 +2,8 @@ name: Coletar noticias
 
 # Coleta horaria de noticias (RSS) e videos (YouTube). Durante evento em foco ao vivo,
 # coletar-acelerada.yml roda a cada 20 min. Mesma fila de commit (concurrency: coletar).
+# O cron do GitHub pode atrasar em horarios de pico; execucoes travadas sao canceladas
+# pela proxima agendada (cancel-in-progress) e o job tem timeout de 20 min.
 
 on:
   schedule:
@@ -13,11 +15,12 @@ permissions:
 
 concurrency:
   group: coletar
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   coletar:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - name: Checkout
         uses: actions/checkout@v4
