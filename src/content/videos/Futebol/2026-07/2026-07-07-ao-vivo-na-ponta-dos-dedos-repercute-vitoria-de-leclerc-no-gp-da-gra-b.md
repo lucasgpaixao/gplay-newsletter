@@ -1,0 +1,13 @@
+---
+titulo: "AO VIVO! NA PONTA DOS DEDOS REPERCUTE VITÓRIA DE LECLERC NO GP DA GRÃ-BRETANHA | #podcast | ge.globo"
+categoriaRelacionada: "Futebol"
+canal: "ge tv"
+videoId: "qIFt9W04AFA"
+link: "https://www.youtube.com/watch?v=qIFt9W04AFA"
+thumbnail: "https://i.ytimg.com/vi/qIFt9W04AFA/hqdefault.jpg"
+publicado: "2026-07-07T16:30:49.000Z"
+coletado: "2026-07-07T17:36:40.416Z"
+guid: "yt:video:qIFt9W04AFA"
+---
+
+AO VIVO! NA PONTA DOS DEDOS REPERCUTE VITÓRIA DE LECLERC NO GP DA GRÃ-BRETANHA | #podcast | ge.globo
