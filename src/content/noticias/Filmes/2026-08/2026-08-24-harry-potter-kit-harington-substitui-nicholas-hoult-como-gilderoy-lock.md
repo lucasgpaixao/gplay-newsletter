@@ -1,0 +1,14 @@
+---
+titulo: "‘Harry Potter’: Kit Harington SUBSTITUI Nicholas Hoult como Gilderoy Lockhart na 2ª temporada"
+resumo: "Segundo o Deadline, Kit Harington (‘Game of Thrones’) foi escalado para a 2ª temporada da série de fantasia ‘Harry Potter’, da HBO. O astro substitui Nicholas Hoult (‘Nosferatu’, ‘Superman’) no papel do charmoso e canastrão Gilderoy Lockhart, professor de Defesa Contra as Artes das Trevas no 2º ano de Harry em..."
+categoria: "Filmes"
+fonte: "CinePOP"
+link: "https://cinepop.com.br/harry-potter-kit-harington-substitui-nicholas-hoult-como-gilderoy-lockhart-na-2a-temporada-764173/"
+imagem: "https://cinepop.com.br/wp-content/uploads/2026/08/IMG_1695.jpeg"
+autor: "Thiago Nolla"
+publicado: "2026-08-24T20:37:14.000Z"
+coletado: "2026-08-24T21:17:12.555Z"
+guid: "https://cinepop.com.br/?p=764173"
+---
+
+Segundo o Deadline, Kit Harington (‘Game of Thrones’) foi escalado para a 2ª temporada da série de fantasia ‘Harry Potter’, da HBO. O astro substitui Nicholas Hoult (‘Nosferatu’, ‘Superman’) no papel do charmoso e canastrão Gilderoy Lockhart, professor de Defesa Contra as Artes das Trevas no 2º ano de Harry em...
