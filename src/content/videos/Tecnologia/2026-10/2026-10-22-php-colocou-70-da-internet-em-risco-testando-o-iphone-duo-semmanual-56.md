@@ -1,0 +1,13 @@
+---
+titulo: "PHP colocou 70% da internet em risco! Testando o iPhone Duo! #SemManual 56 AO VIVO"
+categoriaRelacionada: "Tecnologia"
+canal: "TecMundo"
+videoId: "5ba-7iybGfo"
+link: "https://www.youtube.com/watch?v=5ba-7iybGfo"
+thumbnail: "https://i.ytimg.com/vi/5ba-7iybGfo/hqdefault.jpg"
+publicado: "2026-10-22T18:24:10.000Z"
+coletado: "2026-10-22T20:55:34.423Z"
+guid: "yt:video:5ba-7iybGfo"
+---
+
+PHP colocou 70% da internet em risco! Testando o iPhone Duo! #SemManual 56 AO VIVO
